@@ -100,8 +100,8 @@ export const characters: Character[] = [
       '12-hour screen time on TikTok', '12-hour screen time on Instagram', '12-hour screen time on LinkedIn',
     ],
     years: 5,
-    accent: '#ff6a3d',
-    onAccent: '#1a100e',
+    accent: '#a970ff',
+    onAccent: '#140c22',
     overlay: '/marketing-outfit.png',
     shades: '/marketing-shades.png',
     icon: '📱',
@@ -129,6 +129,14 @@ export function padNumber(value: number): string {
 
 export function wrapIndex(index: number, delta: number): number {
   return (index + delta + characters.length) % characters.length
+}
+
+export type Direction = 1 | -1
+
+export function slideDirection(from: number, to: number, length: number): Direction {
+  const delta = to - from
+  if (Math.abs(delta) > length / 2) return delta > 0 ? -1 : 1
+  return delta >= 0 ? 1 : -1
 }
 
 export function moveRosterIndex(index: number, key: string): number {

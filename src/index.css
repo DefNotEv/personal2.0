@@ -1,3 +1,9 @@
+@property --accent {
+  syntax: '<color>';
+  inherits: true;
+  initial-value: #ff5c9a;
+}
+
 :root {
   color-scheme: dark;
   --paper: #f3ecdf;
@@ -460,6 +466,12 @@ ol {
   font-size: clamp(2.6rem, 6vw, 4.4rem);
 }
 
+.pedestal__glow,
+.pedestal__platform,
+.pedestal__platform::after {
+  transition: --accent 480ms ease;
+}
+
 .pedestal__glow {
   position: absolute;
   left: 50%;
@@ -597,7 +609,7 @@ ol {
   align-items: flex-start;
   justify-self: start;
   width: min(100%, 280px);
-  align-self: center;
+  align-self: end;
   min-height: 26rem;
 }
 
@@ -624,7 +636,6 @@ ol {
     0 0 24px color-mix(in srgb, var(--accent) 14%, transparent);
   backface-visibility: hidden;
   -webkit-backface-visibility: hidden;
-  transition: border-color 240ms ease, box-shadow 240ms ease;
 }
 
 .flip-card__face.is-back {

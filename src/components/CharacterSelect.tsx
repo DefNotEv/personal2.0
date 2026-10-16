@@ -1,11 +1,11 @@
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import type { CSSProperties } from 'react'
 import {
   characters,
   moveRosterIndex,
 } from '../data/characters.ts'
 import { Cabinet } from './Cabinet.tsx'
-import { FlipCard } from './FlipCard.tsx'
+import { FLIP_MS, FlipCard } from './FlipCard.tsx'
 import { PedestalFigure } from './PedestalFigure.tsx'
 import { useRosterScroll } from './useRosterScroll.ts'
 
@@ -20,8 +20,22 @@ export function CharacterSelect({
 }) {
   const character = characters[index] ?? characters[0]
   const touchX = useRef<number | null>(null)
+  const [paint, setPaint] = useState(character)
+  const paintTimers = useRef<number[]>([])
 
   useRosterScroll(index, onIndex)
+
+  // Repaint the page accent when the flip card is edge-on, not on input.
+  useEffect(() => {
+    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    const timer = window.setTimeout(() => setPaint(character), reduced ? 0 : FLIP_MS / 2)
+    paintTimers.current.push(timer)
+  }, [character])
+
+  useEffect(() => {
+    const timers = paintTimers.current
+    return () => timers.forEach((timer) => window.clearTimeout(timer))
+  }, [])
 
   useEffect(() => {
     function onKey(event: KeyboardEvent) {
@@ -57,7 +71,7 @@ export function CharacterSelect({
   }, [character.id])
 
   return (
-    <Cabinet character={character}>
+    <Cabinet character={paint}>
       <div className="select">
         <div className="roster" role="listbox" aria-label="Versions of Evelyn">
           {characters.map((entry, entryIndex) => {

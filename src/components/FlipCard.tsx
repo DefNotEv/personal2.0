@@ -1,10 +1,12 @@
 import { useState } from 'react'
-import { characters } from '../data/characters.ts'
+import type { CSSProperties } from 'react'
+import { characters, slideDirection } from '../data/characters.ts'
 import type { Character } from '../data/characters.ts'
 import { CharacterSheet } from './CharacterSheet.tsx'
-import { slideDirection } from './PedestalFigure.tsx'
 
 type Faces = [Character, Character]
+
+export const FLIP_MS = 560
 
 export function FlipCard({
   character,
@@ -33,7 +35,10 @@ export function FlipCard({
     <div className="flip-card">
       <div
         className="flip-card__inner"
-        style={{ transform: `rotateY(${card.turns * -180}deg)` }}
+        style={{
+          transform: `rotateY(${card.turns * -180}deg)`,
+          transitionDuration: `${FLIP_MS}ms`,
+        }}
       >
         {card.faces.map((face, faceIndex) => (
           <div
@@ -41,6 +46,12 @@ export function FlipCard({
             className={faceIndex === 0 ? 'flip-card__face' : 'flip-card__face is-back'}
             aria-hidden={faceIndex !== front}
             inert={faceIndex !== front}
+            style={
+              {
+                '--accent': face.accent,
+                '--on-accent': face.onAccent,
+              } as CSSProperties
+            }
           >
             <CharacterSheet character={face} />
           </div>
