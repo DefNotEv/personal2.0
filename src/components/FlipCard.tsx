@@ -40,6 +40,11 @@ export function FlipCard({
           transitionDuration: `${FLIP_MS}ms`,
         }}
       >
+        {characters.map((entry) => (
+          <div key={entry.id} className="flip-card__face is-sizer" aria-hidden inert>
+            <CharacterSheet character={entry} />
+          </div>
+        ))}
         {card.faces.map((face, faceIndex) => (
           <div
             key={faceIndex}

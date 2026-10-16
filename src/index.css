@@ -526,6 +526,66 @@ ol {
   margin-bottom: 32px;
 }
 
+.pedestal__arrow {
+  position: absolute;
+  z-index: 4;
+  top: 52%;
+  width: 44px;
+  height: 44px;
+  display: grid;
+  place-items: center;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--accent);
+  cursor: pointer;
+  animation: arrow-float 2.4s ease-in-out infinite;
+  transition: --accent 480ms ease, filter 280ms ease, scale 220ms ease;
+}
+
+.pedestal__arrow.is-prev {
+  left: 0;
+}
+
+.pedestal__arrow.is-next {
+  right: 0;
+  animation-delay: -1.2s;
+}
+
+.pedestal__arrow svg {
+  width: 32px;
+  height: 32px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 3;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.pedestal__arrow:hover,
+.pedestal__arrow:focus-visible {
+  scale: 1.15;
+  filter: drop-shadow(0 0 6px color-mix(in srgb, var(--accent) 80%, transparent));
+}
+
+.pedestal__arrow:focus-visible {
+  outline: none;
+}
+
+.pedestal__arrow:active {
+  scale: 0.94;
+}
+
+@keyframes arrow-float {
+  0%,
+  100% {
+    translate: 0 -50%;
+  }
+  50% {
+    translate: 0 calc(-50% - 7px);
+  }
+}
+
 .pedestal__figure {
   width: 100%;
   height: 100%;
@@ -636,6 +696,10 @@ ol {
     0 0 24px color-mix(in srgb, var(--accent) 14%, transparent);
   backface-visibility: hidden;
   -webkit-backface-visibility: hidden;
+}
+
+.flip-card__face.is-sizer {
+  visibility: hidden;
 }
 
 .flip-card__face.is-back {

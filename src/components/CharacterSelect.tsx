@@ -3,6 +3,7 @@ import type { CSSProperties } from 'react'
 import {
   characters,
   moveRosterIndex,
+  wrapIndex,
 } from '../data/characters.ts'
 import { Cabinet } from './Cabinet.tsx'
 import { FLIP_MS, FlipCard } from './FlipCard.tsx'
@@ -124,6 +125,26 @@ export function CharacterSelect({
           <div className="pedestal__glow" aria-hidden="true" />
           <div className="pedestal__platform" aria-hidden="true" />
           <PedestalFigure character={character} index={index} />
+          <button
+            type="button"
+            className="pedestal__arrow is-prev"
+            aria-label="Previous character"
+            onClick={() => onIndex(wrapIndex(index, -1))}
+          >
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M15 5 8 12l7 7" />
+            </svg>
+          </button>
+          <button
+            type="button"
+            className="pedestal__arrow is-next"
+            aria-label="Next character"
+            onClick={() => onIndex(wrapIndex(index, 1))}
+          >
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="m9 5 7 7-7 7" />
+            </svg>
+          </button>
         </div>
 
         <aside className="dossier">
