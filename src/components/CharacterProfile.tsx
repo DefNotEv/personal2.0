@@ -1,24 +1,16 @@
 import { useEffect } from 'react'
-import { characters, wrapIndex } from '../data/characters.ts'
+import { characters } from '../data/characters.ts'
 import { Cabinet } from './Cabinet.tsx'
 import { CharacterName, CharacterSheet } from './CharacterSheet.tsx'
-import { PedestalFigure } from './PedestalFigure.tsx'
-import { useRosterScroll } from './useRosterScroll.ts'
 
 export function CharacterProfile({
   index,
-  onIndex,
   onBack,
 }: {
   index: number
-  onIndex: (index: number) => void
   onBack: () => void
 }) {
   const character = characters[index] ?? characters[0]
-  const previous = characters[wrapIndex(index, -1)] ?? characters[0]
-  const next = characters[wrapIndex(index, 1)] ?? characters[0]
-
-  useRosterScroll(index, onIndex)
 
   useEffect(() => {
     function onKey(event: KeyboardEvent) {
@@ -26,19 +18,11 @@ export function CharacterProfile({
         event.preventDefault()
         onBack()
       }
-      if (event.key === 'ArrowRight') {
-        event.preventDefault()
-        onIndex(wrapIndex(index, 1))
-      }
-      if (event.key === 'ArrowLeft') {
-        event.preventDefault()
-        onIndex(wrapIndex(index, -1))
-      }
     }
 
     window.addEventListener('keydown', onKey)
     return () => window.removeEventListener('keydown', onKey)
-  }, [index, onBack, onIndex])
+  }, [onBack])
 
   return (
     <Cabinet character={character}>
@@ -47,44 +31,42 @@ export function CharacterProfile({
       </header>
 
       <div className="profile">
-        <div className="pedestal">
-          <div className="pedestal__glow" aria-hidden="true" />
-          <div className="pedestal__platform" aria-hidden="true" />
-          <PedestalFigure character={character} index={index} />
-        </div>
         <article className="profile__copy">
           <h1 data-title={character.id}>
             <CharacterName character={character} />
           </h1>
           <CharacterSheet character={character} />
           <div className="profile__nav">
-            <button
-              type="button"
-              className="nav-btn"
-              onClick={() => onIndex(wrapIndex(index, -1))}
-            >
-              <span>Previous</span>
-              <strong>{previous.short}</strong>
-            </button>
             <button type="button" className="text-btn text-btn--solid" onClick={onBack}>
               Back to roster
             </button>
-            <button
-              type="button"
-              className="nav-btn"
-              onClick={() => onIndex(wrapIndex(index, 1))}
-            >
-              <span>Next</span>
-              <strong>{next.short}</strong>
-            </button>
           </div>
         </article>
+
+        <section className="resume" aria-labelledby="resume-heading">
+          <h2 id="resume-heading" className="eyebrow">
+            Experience
+          </h2>
+          <ul className="resume__list">
+            {character.experiences.map((entry, entryIndex) => (
+              <li key={`${entry.org}-${entryIndex}`} className="exp-card">
+                <div className="exp-card__head">
+                  <h3 className="exp-card__title">{entry.title}</h3>
+                  <p className="exp-card__dates">{entry.dates}</p>
+                </div>
+                <p className="exp-card__org">{entry.org}</p>
+                <ul className="exp-card__points">
+                  {entry.points.map((point) => (
+                    <li key={point}>{point}</li>
+                  ))}
+                </ul>
+              </li>
+            ))}
+          </ul>
+        </section>
       </div>
 
       <p className="hint">
-        <kbd>←</kbd>
-        <kbd>→</kbd>
-        <span>Switch</span>
         <kbd>Esc</kbd>
         <span>Roster</span>
       </p>

@@ -6,6 +6,13 @@ export type CharacterId =
   | 'childcare'
   | 'all-around'
 
+export type Experience = {
+  title: string
+  org: string
+  dates: string
+  points: readonly string[]
+}
+
 export type Character = {
   id: CharacterId
   short: string
@@ -20,7 +27,24 @@ export type Character = {
   shades?: string
   icon: string
   label: string
+  experiences: readonly Experience[]
 }
+
+// TODO: replace with real resume entries for each version.
+const PLACEHOLDER_EXPERIENCES: readonly Experience[] = [
+  {
+    title: 'Role title',
+    org: 'Organization',
+    dates: 'Mon YYYY – Present',
+    points: ['What you did', 'The impact it had'],
+  },
+  {
+    title: 'Role title',
+    org: 'Organization',
+    dates: 'Mon YYYY – Mon YYYY',
+    points: ['What you did', 'The impact it had'],
+  },
+]
 
 export const characters: Character[] = [
   {
@@ -39,6 +63,7 @@ export const characters: Character[] = [
     onAccent: '#1a100e',
     icon: '⭐',
     label: 'me!',
+    experiences: PLACEHOLDER_EXPERIENCES,
   },
   {
     id: 'motorsports',
@@ -57,6 +82,7 @@ export const characters: Character[] = [
     overlay: '/racing.png',
     icon: '🏎️',
     label: 'motorsports',
+    experiences: PLACEHOLDER_EXPERIENCES,
   },
   {
     id: 'events',
@@ -75,6 +101,7 @@ export const characters: Character[] = [
     overlay: '/events.png',
     icon: '🎫',
     label: 'events',
+    experiences: PLACEHOLDER_EXPERIENCES,
   },
   {
     id: 'broadcast',
@@ -89,6 +116,7 @@ export const characters: Character[] = [
     overlay: '/broadcasting.png',
     icon: '🎧',
     label: 'broadcasting',
+    experiences: PLACEHOLDER_EXPERIENCES,
   },
   {
     id: 'marketing',
@@ -106,6 +134,7 @@ export const characters: Character[] = [
     shades: '/marketing-shades.png',
     icon: '📱',
     label: 'marketing',
+    experiences: PLACEHOLDER_EXPERIENCES,
   },
   {
     id: 'childcare',
@@ -120,6 +149,7 @@ export const characters: Character[] = [
     overlay: '/childcare.png',
     icon: '🧸',
     label: 'childcare',
+    experiences: PLACEHOLDER_EXPERIENCES,
   },
 ]
 

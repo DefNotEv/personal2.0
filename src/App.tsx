@@ -68,7 +68,7 @@ export default function App() {
         <CharacterSelect index={index} onIndex={setIndex} onConfirm={showProfile} />
       ) : null}
       {screen === 'profile' ? (
-        <CharacterProfile index={index} onIndex={setIndex} onBack={showRoster} />
+        <CharacterProfile index={index} onBack={showRoster} />
       ) : null}
       {intro ? <IntroScreen onReveal={showRoster} onGone={hideIntro} /> : null}
       {loading ? <LoadingScreen onFinish={beginHandoff} /> : null}
