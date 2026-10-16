@@ -148,7 +148,7 @@ export function PixelCursor() {
     }
 
     function hide(event: MouseEvent) {
-      if (event.relatedTarget) return
+      if (!node || event.relatedTarget) return
       node.dataset.visible = 'false'
     }
 
