@@ -755,10 +755,10 @@ ol {
 }
 
 [data-title='events'] .title__lead {
-  --title-scale: 1.1;
-  font-family: Cinzel, 'Times New Roman', serif;
-  font-weight: 600;
-  letter-spacing: 0.01em;
+  --title-scale: 1.2;
+  font-family: 'Pinyon Script', 'Snell Roundhand', cursive;
+  font-weight: 400;
+  letter-spacing: 0;
 }
 
 [data-title='broadcast'] .title__lead {

@@ -12,7 +12,7 @@ const LOADING_LINES = [
 
 const TITLE_FONTS = [
   '400 1em Speedway',
-  '600 1em Cinzel',
+  '400 1em "Pinyon Script"',
   '400 1em Bulletin',
   '400 1em "Marketing Script"',
   '400 1em "Kids Alphabet"',
