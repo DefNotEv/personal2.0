@@ -433,13 +433,29 @@ ol {
   align-items: center;
   justify-content: flex-end;
   justify-self: center;
+  width: 30rem;
+  max-width: 100%;
   min-width: 0;
 }
 
-.pedestal__title {
+.pedestal__heading {
   z-index: 3;
   width: 100%;
   margin: 0 0 0.15rem;
+  text-align: center;
+}
+
+.pedestal__kicker {
+  margin: 0 0 0.2rem;
+  font-size: 0.78rem;
+  letter-spacing: 0.16em;
+  text-transform: lowercase;
+  color: var(--muted);
+}
+
+.pedestal__title {
+  width: 100%;
+  margin: 0;
   text-align: center;
   font-size: clamp(2.6rem, 6vw, 4.4rem);
 }
@@ -576,9 +592,21 @@ ol {
 }
 
 .dossier {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
   justify-self: start;
   width: min(100%, 280px);
   align-self: center;
+  min-height: 26rem;
+}
+
+.dossier .sheet {
+  width: 100%;
+}
+
+.dossier .choose {
+  margin-top: auto;
 }
 
 .stage__name,
@@ -604,13 +632,20 @@ ol {
 }
 
 .sheet__list {
-  list-style: none;
-  display: grid;
-  gap: 0.18rem;
+  list-style: disc;
+  padding-left: 1.15rem;
+}
+
+.sheet__list li + li {
+  margin-top: 0.18rem;
 }
 
 .sheet__list li {
   line-height: 1.35;
+}
+
+.sheet__block:last-child .sheet__list {
+  min-height: calc(4 * 1.35em + 3 * 0.18rem);
 }
 
 .stars {
@@ -618,6 +653,7 @@ ol {
   flex-wrap: wrap;
   gap: 3px;
   width: calc(10 * 1.05rem + 9 * 3px);
+  min-height: calc(2 * 1.05rem + 3px);
   color: var(--accent);
 }
 
@@ -631,6 +667,7 @@ ol {
 .stars--sm {
   gap: 2px;
   width: calc(10 * 0.58rem + 9 * 2px);
+  min-height: calc(2 * 0.58rem + 2px);
 }
 
 .stars--sm .star {
@@ -657,8 +694,30 @@ ol {
   font-weight: 600;
 }
 
+.choose {
+  box-shadow: 0 0 0 transparent;
+  transition: box-shadow 280ms ease, border-color 220ms ease;
+}
+
+.choose span {
+  display: inline-block;
+  transition: transform 220ms ease;
+}
+
 .choose:hover,
-.choose:focus-visible,
+.choose:focus-visible {
+  background: transparent;
+  color: inherit;
+  box-shadow:
+    0 0 14px color-mix(in srgb, var(--accent) 75%, transparent),
+    0 0 28px color-mix(in srgb, var(--accent) 42%, transparent);
+}
+
+.choose:hover span,
+.choose:focus-visible span {
+  transform: scale(1.08);
+}
+
 .text-btn:hover,
 .text-btn:focus-visible,
 .nav-btn:hover,
@@ -785,7 +844,7 @@ kbd {
 }
 
 .pedestal .doodle[data-outfit='motorsports'] .portrait__overlay {
-  transform: translateX(-2%) scale(1.1);
+  transform: translate(-2%, -1%) scale(0.94, 1.05);
 }
 
 .pedestal .doodle[data-outfit='events'] .portrait__overlay {
@@ -891,6 +950,7 @@ kbd {
 
   .dossier {
     width: 100%;
+    min-height: 0;
   }
 
   .stage__name,
@@ -981,6 +1041,33 @@ kbd {
   to {
     opacity: 1;
   }
+}
+
+.has-p1-cursor,
+.has-p1-cursor * {
+  cursor: none !important;
+}
+
+.p1-cursor {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 200;
+  display: flex;
+  align-items: flex-end;
+  gap: 1px;
+  pointer-events: none;
+  opacity: 0;
+}
+
+.p1-cursor[data-visible='true'] {
+  opacity: 1;
+}
+
+.p1-cursor__art {
+  display: block;
+  shape-rendering: crispEdges;
+  image-rendering: pixelated;
 }
 
 @media (prefers-reduced-motion: reduce) {

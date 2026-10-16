@@ -103,7 +103,10 @@ export function CharacterSelect({
             onIndex((index + (delta < 0 ? 1 : -1) + characters.length) % characters.length)
           }}
         >
-          <h2 className="stage__name pedestal__title">{character.name}</h2>
+          <div className="pedestal__heading">
+            <p className="pedestal__kicker">choose your evelyn</p>
+            <h2 className="stage__name pedestal__title">{character.name}</h2>
+          </div>
           <div className="pedestal__glow" aria-hidden="true" />
           <div className="pedestal__platform" aria-hidden="true" />
           <PedestalFigure character={character} index={index} />
@@ -117,7 +120,7 @@ export function CharacterSelect({
             aria-label={`Choose ${character.name}`}
             onClick={onConfirm}
           >
-            Choose
+            <span>Choose</span>
           </button>
         </aside>
       </div>

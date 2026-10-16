@@ -3,6 +3,7 @@ import { CharacterProfile } from './components/CharacterProfile.tsx'
 import { CharacterSelect } from './components/CharacterSelect.tsx'
 import { IntroScreen } from './components/IntroScreen.tsx'
 import { LoadingScreen } from './components/LoadingScreen.tsx'
+import { PixelCursor } from './components/PixelCursor.tsx'
 import { ThemeToggle } from './components/ThemeToggle.tsx'
 import { characters } from './data/characters.ts'
 
@@ -61,23 +62,8 @@ export default function App() {
     return () => window.clearTimeout(clear)
   }, [curtain])
 
-  useEffect(() => {
-    if (loading) {
-      document.title = 'Loading...'
-      return
-    }
-    if (intro && screen === 'loading') {
-      document.title = "Hi, I'm Evelyn"
-      return
-    }
-    if (screen === 'select') {
-      document.title = 'Choose your character — Evelyn'
-      return
-    }
-    document.title = `${characters[index]?.name ?? 'Evelyn'} — Evelyn`
-  }, [loading, intro, screen, index])
-
   return (
+    <>
     <main>
       {screen === 'select' ? (
         <CharacterSelect index={index} onIndex={setIndex} onConfirm={showProfile} />
@@ -92,5 +78,7 @@ export default function App() {
       ) : null}
       <ThemeToggle hidden={screen === 'loading'} />
     </main>
+    <PixelCursor />
+    </>
   )
 }
