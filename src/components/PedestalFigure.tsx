@@ -5,7 +5,7 @@ import { OutfitDrawing, PHOTO } from './CharacterCutout.tsx'
 
 type Direction = 1 | -1
 
-function slideDirection(from: number, to: number, length: number): Direction {
+export function slideDirection(from: number, to: number, length: number): Direction {
   const delta = to - from
   if (Math.abs(delta) > length / 2) return delta > 0 ? -1 : 1
   return delta >= 0 ? 1 : -1

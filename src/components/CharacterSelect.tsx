@@ -5,7 +5,7 @@ import {
   moveRosterIndex,
 } from '../data/characters.ts'
 import { Cabinet } from './Cabinet.tsx'
-import { CharacterSheet } from './CharacterSheet.tsx'
+import { FlipCard } from './FlipCard.tsx'
 import { PedestalFigure } from './PedestalFigure.tsx'
 import { useRosterScroll } from './useRosterScroll.ts'
 
@@ -113,7 +113,7 @@ export function CharacterSelect({
         </div>
 
         <aside className="dossier">
-          <CharacterSheet character={character} />
+          <FlipCard character={character} index={index} />
           <button
             type="button"
             className="choose"
