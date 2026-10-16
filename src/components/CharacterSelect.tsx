@@ -57,20 +57,6 @@ export function CharacterSelect({
     return () => window.removeEventListener('keydown', onKey)
   }, [index, onConfirm, onIndex])
 
-  useEffect(() => {
-    const card = document.getElementById(`character-${character.id}`)
-    const roster = card?.closest('.roster')
-    if (!card || !(roster instanceof HTMLElement)) return
-
-    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
-    const cardLeft = card.getBoundingClientRect().left - roster.getBoundingClientRect().left
-    const target = roster.scrollLeft + cardLeft - (roster.clientWidth - card.clientWidth) / 2
-    roster.scrollTo({
-      left: Math.max(0, target),
-      behavior: reduced ? 'auto' : 'smooth',
-    })
-  }, [character.id])
-
   return (
     <Cabinet character={paint}>
       <div className="select">

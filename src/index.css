@@ -1022,23 +1022,7 @@ kbd {
   }
 
   .roster {
-    display: grid;
-    grid-auto-flow: column;
-    grid-auto-columns: 96px;
-    grid-template-columns: none;
-    grid-template-rows: auto;
-    overflow-x: auto;
-    scroll-snap-type: x mandatory;
-    width: 100%;
-  }
-
-  .roster-card {
-    scroll-snap-align: center;
-  }
-
-  .roster-card__box {
-    height: 72px;
-    aspect-ratio: auto;
+    display: none;
   }
 
   .pedestal {
