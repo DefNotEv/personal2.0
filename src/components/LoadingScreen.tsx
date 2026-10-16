@@ -13,23 +13,16 @@ const LOADING_LINES = [
 const STEP_MS = 520
 const FIRST_STEP_MS = 480
 const HOLD_MS = 800
-const CUT_MS = 200
 
-export function LoadingScreen({ onComplete }: { onComplete: () => void }) {
+export function LoadingScreen({ onFinish }: { onFinish: () => void }) {
   const [lit, setLit] = useState(() => (prefersReducedMotion() ? LOADING_LINES.length : 0))
-  const [leaving, setLeaving] = useState(false)
   const finished = useRef(false)
 
   const finish = useCallback(() => {
     if (finished.current) return
     finished.current = true
-    if (prefersReducedMotion()) {
-      onComplete()
-      return
-    }
-    setLeaving(true)
-    window.setTimeout(onComplete, CUT_MS)
-  }, [onComplete])
+    onFinish()
+  }, [onFinish])
 
   useEffect(() => {
     const timeouts: number[] = []
@@ -64,12 +57,7 @@ export function LoadingScreen({ onComplete }: { onComplete: () => void }) {
   }, [finish])
 
   return (
-    <div
-      className={leaving ? 'loader is-leaving' : 'loader'}
-      onClick={finish}
-      role="status"
-      aria-live="polite"
-    >
+    <div className="loader" onClick={finish} role="status" aria-live="polite">
       <div className="loader__panel">
         <h1 className="loader__kicker">Now loading</h1>
         <p className="sr-only">{LOADING_LINES[lit - 1] ?? 'Loading'}</p>

@@ -3,11 +3,10 @@ import type { CSSProperties } from 'react'
 import {
   characters,
   moveRosterIndex,
-  padNumber,
 } from '../data/characters.ts'
 import { Cabinet } from './Cabinet.tsx'
-import { CharacterCutout } from './CharacterCutout.tsx'
 import { CharacterSheet } from './CharacterSheet.tsx'
+import { PedestalFigure } from './PedestalFigure.tsx'
 import { useRosterScroll } from './useRosterScroll.ts'
 
 export function CharacterSelect({
@@ -59,13 +58,6 @@ export function CharacterSelect({
 
   return (
     <Cabinet character={character}>
-      <header className="topbar">
-        <h1>Hi, I'm Evelyn. Choose your character.</h1>
-        <p className="count">
-          {padNumber(index + 1)} / {padNumber(characters.length)}
-        </p>
-      </header>
-
       <div className="select">
         <div className="roster" role="listbox" aria-label="Versions of Evelyn">
           {characters.map((entry, entryIndex) => {
@@ -111,18 +103,13 @@ export function CharacterSelect({
             onIndex((index + (delta < 0 ? 1 : -1) + characters.length) % characters.length)
           }}
         >
+          <h2 className="stage__name pedestal__title">{character.name}</h2>
           <div className="pedestal__glow" aria-hidden="true" />
           <div className="pedestal__platform" aria-hidden="true" />
-          <div className="pedestal__figure" key={character.id}>
-            <CharacterCutout character={character} className="cutout" />
-          </div>
+          <PedestalFigure character={character} index={index} />
         </div>
 
         <aside className="dossier">
-          <div>
-            <p className="eyebrow">Version {padNumber(index + 1)}</p>
-            <h2 className="stage__name">{character.name}</h2>
-          </div>
           <CharacterSheet character={character} />
           <button
             type="button"
@@ -136,11 +123,17 @@ export function CharacterSelect({
       </div>
 
       <p className="hint">
-        <kbd>←</kbd>
-        <kbd>→</kbd>
-        <span>Move</span>
-        <kbd>Enter</kbd>
-        <span>Choose</span>
+        <span className="hint__group">
+          <span>Move</span>
+          <span className="hint__keys">
+            <kbd>←</kbd>
+            <kbd>→</kbd>
+          </span>
+        </span>
+        <span className="hint__group">
+          <span>Choose</span>
+          <kbd>Enter</kbd>
+        </span>
       </p>
     </Cabinet>
   )

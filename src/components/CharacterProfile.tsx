@@ -1,8 +1,8 @@
 import { useEffect } from 'react'
-import { characters, padNumber, wrapIndex } from '../data/characters.ts'
+import { characters, wrapIndex } from '../data/characters.ts'
 import { Cabinet } from './Cabinet.tsx'
-import { CharacterCutout } from './CharacterCutout.tsx'
 import { CharacterSheet } from './CharacterSheet.tsx'
+import { PedestalFigure } from './PedestalFigure.tsx'
 import { useRosterScroll } from './useRosterScroll.ts'
 
 export function CharacterProfile({
@@ -44,18 +44,13 @@ export function CharacterProfile({
     <Cabinet character={character}>
       <header className="topbar">
         <p className="eyebrow">Character file</p>
-        <p className="count">
-          {padNumber(index + 1)} / {padNumber(characters.length)}
-        </p>
       </header>
 
       <div className="profile">
         <div className="pedestal">
           <div className="pedestal__glow" aria-hidden="true" />
           <div className="pedestal__platform" aria-hidden="true" />
-          <div className="pedestal__figure" key={character.id}>
-            <CharacterCutout character={character} className="cutout" />
-          </div>
+          <PedestalFigure character={character} index={index} />
         </div>
         <article className="profile__copy">
           <h1>{character.name}</h1>

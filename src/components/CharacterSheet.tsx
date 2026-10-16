@@ -31,7 +31,7 @@ export function CharacterSheet({ character }: { character: Character }) {
         <p className="sheet__role">{character.role}</p>
       </div>
       <div className="sheet__block">
-        <p className="eyebrow">Experience</p>
+        <p className="eyebrow">Years of experience</p>
         <ExperienceStars years={character.years} />
       </div>
       <div className="sheet__block">
