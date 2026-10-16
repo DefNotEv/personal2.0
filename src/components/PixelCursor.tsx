@@ -92,6 +92,15 @@ function outline(cells: Array<[number, number]>): Array<[number, number]> {
   return edge
 }
 
+const ARROW_SCALE = 2
+const MARK_SCALE = 3
+const ART_HEIGHT = 16
+
+// The arrow is bottom-aligned with the taller mark, and each drawing is inset
+// by one cell. Shift the cursor so the arrow's tip pixel sits on the pointer.
+const HOTSPOT_X = ARROW_SCALE
+const HOTSPOT_Y = ART_HEIGHT * (MARK_SCALE - ARROW_SCALE) + ARROW_SCALE
+
 function PixelMark({
   cells,
   scale,
@@ -104,7 +113,7 @@ function PixelMark({
     <svg
       className="p1-cursor__art"
       width={10 * scale}
-      height={16 * scale}
+      height={ART_HEIGHT * scale}
       aria-hidden="true"
     >
       {edge.map(([x, y]) => (
@@ -141,9 +150,33 @@ export function PixelCursor() {
 
     document.documentElement.classList.add('has-p1-cursor')
 
+    // The scrollbar gutter can push the fixed box off the viewport origin.
+    let originX = 0
+    let originY = 0
+    let lastX = 0
+    let lastY = 0
+
+    function place() {
+      if (!node) return
+      node.style.transform = `translate3d(${lastX - originX - HOTSPOT_X}px, ${lastY - originY - HOTSPOT_Y}px, 0)`
+    }
+
+    function measure() {
+      if (!node) return
+      const transform = node.style.transform
+      node.style.transform = 'none'
+      const box = node.getBoundingClientRect()
+      originX = box.left
+      originY = box.top
+      node.style.transform = transform
+      place()
+    }
+
     function move(event: MouseEvent) {
       if (!node) return
-      node.style.transform = `translate3d(${event.clientX}px, ${event.clientY}px, 0)`
+      lastX = event.clientX
+      lastY = event.clientY
+      place()
       node.dataset.visible = 'true'
     }
 
@@ -152,10 +185,13 @@ export function PixelCursor() {
       node.dataset.visible = 'false'
     }
 
+    measure()
+    window.addEventListener('resize', measure)
     window.addEventListener('mousemove', move)
     window.addEventListener('mouseout', hide)
     return () => {
       document.documentElement.classList.remove('has-p1-cursor')
+      window.removeEventListener('resize', measure)
       window.removeEventListener('mousemove', move)
       window.removeEventListener('mouseout', hide)
     }
@@ -163,8 +199,8 @@ export function PixelCursor() {
 
   return (
     <div className="p1-cursor" ref={cursor} aria-hidden="true">
-      <PixelMark cells={ARROW} scale={2} />
-      <PixelMark cells={MARK} scale={3} />
+      <PixelMark cells={ARROW} scale={ARROW_SCALE} />
+      <PixelMark cells={MARK} scale={MARK_SCALE} />
     </div>
   )
 }

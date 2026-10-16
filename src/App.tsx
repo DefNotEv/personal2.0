@@ -4,7 +4,6 @@ import { CharacterSelect } from './components/CharacterSelect.tsx'
 import { IntroScreen } from './components/IntroScreen.tsx'
 import { LoadingScreen } from './components/LoadingScreen.tsx'
 import { PixelCursor } from './components/PixelCursor.tsx'
-import { ThemeToggle } from './components/ThemeToggle.tsx'
 import { characters } from './data/characters.ts'
 
 type Screen = 'loading' | 'select' | 'profile'
@@ -76,7 +75,6 @@ export default function App() {
       {curtain ? (
         <div className={curtain === 'in' ? 'curtain is-in' : 'curtain is-out'} />
       ) : null}
-      <ThemeToggle hidden={screen === 'loading'} />
     </main>
     <PixelCursor />
     </>

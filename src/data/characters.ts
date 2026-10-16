@@ -32,7 +32,7 @@ export const characters: Character[] = [
     years: 19,
     weaknesses: [
       'Canto but can\'t speak Cantonese',
-      '"Yo let\'s go for a drive to 7Brew"',
+      'Light mode (i refuse to code this in)',
       'Spends half her money on Magic: The Gathering',
     ],
     accent: '#ff5c9a',
