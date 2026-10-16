@@ -1,7 +1,7 @@
 import { useEffect } from 'react'
 import { characters, wrapIndex } from '../data/characters.ts'
 import { Cabinet } from './Cabinet.tsx'
-import { CharacterSheet } from './CharacterSheet.tsx'
+import { CharacterName, CharacterSheet } from './CharacterSheet.tsx'
 import { PedestalFigure } from './PedestalFigure.tsx'
 import { useRosterScroll } from './useRosterScroll.ts'
 
@@ -53,7 +53,9 @@ export function CharacterProfile({
           <PedestalFigure character={character} index={index} />
         </div>
         <article className="profile__copy">
-          <h1>{character.name}</h1>
+          <h1 data-title={character.id}>
+            <CharacterName character={character} />
+          </h1>
           <CharacterSheet character={character} />
           <div className="profile__nav">
             <button

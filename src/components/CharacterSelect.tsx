@@ -6,6 +6,7 @@ import {
   wrapIndex,
 } from '../data/characters.ts'
 import { Cabinet } from './Cabinet.tsx'
+import { CharacterName } from './CharacterSheet.tsx'
 import { FLIP_MS, FlipCard } from './FlipCard.tsx'
 import { PedestalFigure } from './PedestalFigure.tsx'
 import { useRosterScroll } from './useRosterScroll.ts'
@@ -106,7 +107,9 @@ export function CharacterSelect({
         >
           <div className="pedestal__heading">
             <p className="pedestal__kicker">choose your evelyn</p>
-            <h2 className="stage__name pedestal__title">{character.name}</h2>
+            <h2 className="stage__name pedestal__title" data-title={character.id}>
+              <CharacterName character={character} />
+            </h2>
           </div>
           <div className="pedestal__glow" aria-hidden="true" />
           <div className="pedestal__platform" aria-hidden="true" />

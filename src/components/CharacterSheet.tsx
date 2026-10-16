@@ -23,6 +23,17 @@ export function ExperienceStars({
   )
 }
 
+export function CharacterName({ character }: { character: Character }) {
+  const match = /^(.*?)\s+(Evelyn)$/.exec(character.name)
+  if (!match) return character.name
+
+  return (
+    <>
+      <span className="title__lead">{match[1]}</span> {match[2]}
+    </>
+  )
+}
+
 export function CharacterSheet({ character }: { character: Character }) {
   return (
     <div className="sheet">

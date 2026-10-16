@@ -10,6 +10,14 @@ const LOADING_LINES = [
   'writing bad jokes...',
 ] as const
 
+const TITLE_FONTS = [
+  '400 1em Speedway',
+  '600 1em Cinzel',
+  '400 1em Bulletin',
+  '400 1em "Marketing Script"',
+  '400 1em "Kids Alphabet"',
+]
+
 const STEP_MS = 520
 const FIRST_STEP_MS = 480
 const HOLD_MS = 800
@@ -23,6 +31,12 @@ export function LoadingScreen({ onFinish }: { onFinish: () => void }) {
     finished.current = true
     onFinish()
   }, [onFinish])
+
+  useEffect(() => {
+    TITLE_FONTS.forEach((font) => {
+      document.fonts.load(font).catch(() => {})
+    })
+  }, [])
 
   useEffect(() => {
     const timeouts: number[] = []
