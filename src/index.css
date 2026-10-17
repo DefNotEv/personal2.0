@@ -704,6 +704,7 @@ ol {
 .flip-card {
   width: 100%;
   perspective: 1200px;
+  container-type: inline-size;
 }
 
 .flip-card__inner {
@@ -722,11 +723,13 @@ ol {
   -webkit-backface-visibility: hidden;
 }
 
-/* Magic: The Gathering style stats card (63 × 88 like the real thing). */
+/* Magic: The Gathering style stats card (63 × 88 like the real thing).
+   Sizes are in cqw of the card's width (designed at 275px), so the whole
+   card scales as one piece when it's drawn smaller or larger. */
 .mtg {
   aspect-ratio: 63 / 88;
-  padding: 9px;
-  border-radius: 14px;
+  padding: 3.27cqw;
+  border-radius: 5.09cqw;
   background: #0b0a09;
   color: #16130f;
 }
@@ -735,9 +738,9 @@ ol {
   height: 100%;
   display: flex;
   flex-direction: column;
-  gap: 4px;
-  padding: 6px;
-  border-radius: 8px;
+  gap: 1.45cqw;
+  padding: 2.18cqw;
+  border-radius: 2.91cqw;
   background:
     radial-gradient(120% 80% at 30% 10%, rgba(255, 255, 255, 0.14), transparent 60%),
     linear-gradient(
@@ -751,10 +754,10 @@ ol {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  gap: 6px;
-  padding: 3px 8px;
-  border: 2px solid color-mix(in srgb, var(--accent) 35%, #0b0a09);
-  border-radius: 10px / 50%;
+  gap: 2.18cqw;
+  padding: 1.09cqw 2.91cqw;
+  border: 0.73cqw solid color-mix(in srgb, var(--accent) 35%, #0b0a09);
+  border-radius: 3.64cqw / 50%;
   background: linear-gradient(
     180deg,
     color-mix(in srgb, var(--accent) 14%, #f6f1e8),
@@ -764,13 +767,13 @@ ol {
 }
 
 .mtg__title {
-  min-height: 28px;
+  min-height: 10.18cqw;
 }
 
 .mtg__name {
   font-family: Fraunces, Georgia, serif;
   font-weight: 600;
-  font-size: 0.86rem;
+  font-size: 5cqw;
   letter-spacing: -0.01em;
   white-space: nowrap;
   overflow: hidden;
@@ -779,20 +782,20 @@ ol {
 
 .mtg__cost {
   display: flex;
-  gap: 2px;
+  gap: 0.73cqw;
   flex: none;
 }
 
 .mtg__pip {
   display: grid;
   place-items: center;
-  min-width: 17px;
-  height: 17px;
-  padding: 0 3px;
+  min-width: 6.18cqw;
+  height: 6.18cqw;
+  padding: 0 1.09cqw;
   border-radius: 999px;
   font-family: Fraunces, Georgia, serif;
   font-weight: 700;
-  font-size: 0.66rem;
+  font-size: 3.84cqw;
   line-height: 1;
   box-shadow: -1px 1px 0 rgba(0, 0, 0, 0.55);
 }
@@ -810,7 +813,7 @@ ol {
   flex: none;
   aspect-ratio: 1.9 / 1;
   overflow: hidden;
-  border: 2px solid #0b0a09;
+  border: 0.73cqw solid #0b0a09;
   border-radius: 2px;
   background:
     radial-gradient(90% 120% at 50% 100%, color-mix(in srgb, var(--accent) 40%, transparent), transparent 70%),
@@ -850,7 +853,7 @@ ol {
 .mtg__type {
   font-family: Fraunces, Georgia, serif;
   font-weight: 600;
-  font-size: 0.66rem;
+  font-size: 3.84cqw;
   line-height: 1.15;
 }
 
@@ -863,7 +866,7 @@ ol {
 
 .mtg__set {
   flex: none;
-  font-size: 0.85rem;
+  font-size: 4.95cqw;
   line-height: 1;
 }
 
@@ -871,11 +874,11 @@ ol {
   flex: 1;
   min-height: 0;
   overflow: hidden;
-  padding: 6px 9px;
-  border: 2px solid color-mix(in srgb, var(--accent) 30%, #0b0a09);
+  padding: 2.18cqw 3.27cqw;
+  border: 0.73cqw solid color-mix(in srgb, var(--accent) 30%, #0b0a09);
   border-radius: 2px;
   background: linear-gradient(180deg, #f3ecdf, #e6dccb);
-  font-size: 0.75rem;
+  font-size: 4.36cqw;
   line-height: 1.25;
 }
 
@@ -883,12 +886,12 @@ ol {
   margin: 0;
   font-family: Fraunces, Georgia, serif;
   font-weight: 700;
-  font-size: 0.8rem;
+  font-size: 4.65cqw;
 }
 
 .mtg__keyword + ul {
-  margin: 1px 0 5px;
-  padding-left: 0.95rem;
+  margin: 0.36cqw 0 1.82cqw;
+  padding-left: 5.53cqw;
 }
 
 .mtg__rules ul:last-child {
@@ -1825,12 +1828,19 @@ kbd {
   }
 
   .pedestal__stage {
-    height: min(46vh, 420px);
+    height: clamp(150px, 28svh, 300px);
   }
 
   .dossier {
     width: 100%;
     min-height: 0;
+    align-items: center;
+  }
+
+  /* Leaves room for the title and podium above so the whole card fits on
+     screen; the card's contents scale with it. */
+  .dossier .flip-card {
+    width: clamp(200px, calc(51.5svh - 135px), 320px);
   }
 
   .stage__name,

@@ -36,6 +36,9 @@ export type CardArt = {
   position?: string
   /** Zoom in past a plain crop, centred on `position`. */
   zoom?: number
+  /** Separate framing for the video when it's shot differently from the still. */
+  videoPosition?: string
+  videoZoom?: number
 }
 
 export type Character = {
@@ -81,6 +84,14 @@ export const characters: Character[] = [
     onAccent: '#1a100e',
     icon: '⭐',
     label: 'me!',
+    cardArt: {
+      image: '/mecard-still.jpg',
+      video: '/mecard.MOV',
+      position: '46% 54%',
+      zoom: 1.45,
+      videoPosition: '50% 52%',
+      videoZoom: 1,
+    },
     choosable: false,
     experiences: [],
   },
@@ -176,6 +187,14 @@ export const characters: Character[] = [
     accent: '#e0b15a',
     onAccent: '#1a100e',
     overlay: '/events.png',
+    cardArt: {
+      image: '/eventscard.jpg',
+      video: '/eventscard.mov',
+      position: '44% 36%',
+      zoom: 1.6,
+      videoPosition: '50% 38%',
+      videoZoom: 1.5,
+    },
     icon: '🎫',
     label: 'events',
     experiences: [
@@ -240,6 +259,11 @@ export const characters: Character[] = [
     accent: '#3ad7ff',
     onAccent: '#062028',
     overlay: '/broadcasting.png',
+    cardArt: {
+      image: '/broadcastcard-still.png',
+      video: '/broadcastcard.mp4',
+      position: 'center 55%',
+    },
     icon: '🎧',
     label: 'broadcasting',
     experiences: [

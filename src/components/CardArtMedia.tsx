@@ -2,6 +2,14 @@ import { useEffect, useRef, useState } from 'react'
 import type { CardArt } from '../data/characters.ts'
 import { videoSource } from './preload.ts'
 
+function frame(position?: string, zoom?: number) {
+  return {
+    objectPosition: position,
+    transform: zoom ? `scale(${zoom})` : undefined,
+    transformOrigin: position,
+  }
+}
+
 // Still image underneath; the video sits on top only while it plays, so the
 // still shows through once it ends (or if it can't play).
 export function CardArtMedia({
@@ -16,11 +24,8 @@ export function CardArtMedia({
 }) {
   const video = useRef<HTMLVideoElement>(null)
   const [playing, setPlaying] = useState(false)
-  const framing = {
-    objectPosition: art.position,
-    transform: art.zoom ? `scale(${art.zoom})` : undefined,
-    transformOrigin: art.position,
-  }
+  const framing = frame(art.position, art.zoom)
+  const videoFraming = frame(art.videoPosition ?? art.position, art.videoZoom ?? art.zoom)
 
   useEffect(() => {
     const element = video.current
@@ -50,7 +55,7 @@ export function CardArtMedia({
           ref={video}
           className={playing ? 'mtg__media mtg__video is-playing' : 'mtg__media mtg__video'}
           src={videoSource(art.video)}
-          style={framing}
+          style={videoFraming}
           muted
           playsInline
           preload="auto"
