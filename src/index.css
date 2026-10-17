@@ -1892,6 +1892,292 @@ kbd {
   }
 }
 
+/* Site sidebar: fixed on wide screens, a slide-out drawer below that. */
+:root {
+  --sidebar-w: 212px;
+}
+
+.sidebar-shell {
+  transition: --accent 480ms ease;
+}
+
+.sidebar {
+  position: fixed;
+  z-index: 40;
+  inset: 0 auto 0 0;
+  width: var(--sidebar-w);
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  padding: 28px 18px 24px;
+  background: var(--cabinet);
+  border-right: 1px solid var(--line);
+}
+
+.sidebar__brand {
+  display: grid;
+  gap: 0.4rem;
+  padding: 0 0.6rem;
+  color: var(--cream);
+  text-decoration: none;
+  font-family: Fraunces, Georgia, serif;
+  font-weight: 560;
+  font-size: 1.7rem;
+  letter-spacing: -0.035em;
+  line-height: 1;
+}
+
+.sidebar__brand span {
+  font-family: Outfit, sans-serif;
+  font-size: 0.66rem;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.sidebar__nav {
+  display: grid;
+  gap: 0.25rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.sidebar__nav a {
+  position: relative;
+  display: block;
+  padding: 0.65rem 0.75rem 0.65rem 1.7rem;
+  border-radius: 8px;
+  color: var(--muted);
+  text-decoration: none;
+  font-size: 0.74rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  transition: color 180ms ease, background-color 180ms ease;
+}
+
+.sidebar__nav a:hover,
+.sidebar__nav a:focus-visible {
+  color: var(--cream);
+  background: color-mix(in srgb, var(--accent) 10%, transparent);
+  outline: none;
+}
+
+.sidebar__nav a[aria-current='page'] {
+  color: var(--cream);
+  background: color-mix(in srgb, var(--accent) 18%, transparent);
+}
+
+/* Arcade-menu cursor on the current page. */
+.sidebar__nav a[aria-current='page']::before {
+  content: '▶';
+  position: absolute;
+  left: 0.65rem;
+  top: 50%;
+  translate: 0 -50%;
+  font-size: 0.6rem;
+  color: var(--accent);
+  animation: menu-caret 1s steps(2, start) infinite;
+}
+
+@keyframes menu-caret {
+  to {
+    visibility: hidden;
+  }
+}
+
+.sidebar__socials {
+  display: grid;
+  grid-template-columns: repeat(3, 34px);
+  gap: 8px;
+  margin: auto 0 0;
+  padding: 0 0.6rem;
+  list-style: none;
+}
+
+.sidebar__socials a,
+.sidebar__socials .is-placeholder {
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  border: 1px solid var(--line);
+  border-radius: 9px;
+  color: var(--muted);
+  transition: color 180ms ease, border-color 180ms ease;
+}
+
+.sidebar__socials a:hover,
+.sidebar__socials a:focus-visible {
+  color: var(--accent);
+  border-color: var(--accent);
+  outline: none;
+}
+
+.sidebar__socials .is-placeholder {
+  opacity: 0.35;
+  border-style: dashed;
+}
+
+.social-icon {
+  width: 20px;
+  height: 20px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.social-icon .is-fill {
+  fill: currentColor;
+  stroke: none;
+}
+
+.menu-toggle {
+  display: none;
+}
+
+.sidebar__scrim {
+  display: none;
+}
+
+@media (min-width: 1200px) {
+  .shell {
+    padding-left: var(--sidebar-w);
+  }
+}
+
+@media (max-width: 1199px) {
+  /* Below desktop it's a drawer from the right; the button sits in the
+     top-right corner, which is empty on every page. */
+  .sidebar {
+    inset: 0 0 0 auto;
+    width: min(280px, 82vw);
+    border-right: 0;
+    border-left: 1px solid var(--line);
+    translate: 100% 0;
+    transition: translate 280ms cubic-bezier(0.2, 0.8, 0.2, 1);
+  }
+
+  .sidebar.is-open {
+    translate: 0 0;
+    box-shadow: 0 0 60px rgba(0, 0, 0, 0.6);
+  }
+
+  .menu-toggle {
+    position: fixed;
+    z-index: 45;
+    top: 6px;
+    right: 6px;
+    display: grid;
+    place-items: center;
+    width: 34px;
+    height: 34px;
+    padding: 0;
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    background: var(--card);
+    color: var(--cream);
+    cursor: pointer;
+  }
+
+  .menu-toggle span {
+    width: 16px;
+    height: 2px;
+    border-radius: 2px;
+    background: currentColor;
+    box-shadow:
+      0 -5px 0 currentColor,
+      0 5px 0 currentColor;
+  }
+
+  .sidebar__scrim {
+    position: fixed;
+    z-index: 35;
+    inset: 0;
+    display: block;
+    background: rgba(0, 0, 0, 0.55);
+  }
+}
+
+/* Blog and contact pages. */
+.page {
+  display: grid;
+  align-content: start;
+  gap: 1rem;
+  max-width: 720px;
+  padding-top: 0.5rem;
+}
+
+.page__title {
+  margin: 0;
+  font-family: Fraunces, Georgia, serif;
+  font-weight: 560;
+  font-size: clamp(2.4rem, 5vw, 3.6rem);
+  letter-spacing: -0.035em;
+  line-height: 1;
+}
+
+.page__lede {
+  max-width: 46ch;
+  margin: 0;
+  color: var(--muted);
+  font-size: 1.05rem;
+  line-height: 1.5;
+}
+
+.page__empty {
+  display: grid;
+  gap: 0.35rem;
+  max-width: 460px;
+  margin-top: 0.75rem;
+  padding: 1.25rem;
+  border: 1px dashed var(--line);
+  border-radius: 14px;
+}
+
+.page__empty p {
+  margin: 0;
+}
+
+.page__cta {
+  justify-self: start;
+  display: inline-flex;
+  color: inherit;
+  text-decoration: none;
+}
+
+.contact-links {
+  display: grid;
+  gap: 0.5rem;
+  max-width: 360px;
+  margin: 0.5rem 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.contact-links a {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem 1rem;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  color: inherit;
+  text-decoration: none;
+  transition: color 180ms ease, border-color 180ms ease;
+}
+
+.contact-links a:hover,
+.contact-links a:focus-visible {
+  color: var(--accent);
+  border-color: var(--accent);
+  outline: none;
+}
+
 .has-p1-cursor,
 .has-p1-cursor * {
   cursor: none !important;
