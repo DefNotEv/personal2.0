@@ -552,6 +552,7 @@ ol {
   width: min(100%, 390px);
   height: min(56vh, 520px);
   margin-bottom: 32px;
+  container-type: size;
 }
 
 .pedestal__arrow {
@@ -615,6 +616,9 @@ ol {
 }
 
 .pedestal__figure {
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
   width: 100%;
   height: 100%;
   clip-path: inset(-40% -30% 0 -30%);
@@ -678,7 +682,13 @@ ol {
   }
 }
 
+/* Always the 390 × 448 shape the outfit offsets were tuned in (they're %
+   of this box), as large as fits the stage, standing on the platform. */
 .pedestal .portrait {
+  flex: none;
+  width: min(100cqw, calc(100cqh * 390 / 448));
+  height: auto;
+  aspect-ratio: 390 / 448;
   transform: translateY(18%);
 }
 
@@ -811,7 +821,7 @@ ol {
 .mtg__art {
   position: relative;
   flex: none;
-  aspect-ratio: 1.9 / 1;
+  aspect-ratio: 2 / 1;
   overflow: hidden;
   border: 0.73cqw solid #0b0a09;
   border-radius: 2px;
@@ -878,15 +888,15 @@ ol {
   border: 0.73cqw solid color-mix(in srgb, var(--accent) 30%, #0b0a09);
   border-radius: 2px;
   background: linear-gradient(180deg, #f3ecdf, #e6dccb);
-  font-size: 4.36cqw;
-  line-height: 1.25;
+  font-size: 4.7cqw;
+  line-height: 1.2;
 }
 
 .mtg__keyword {
   margin: 0;
   font-family: Fraunces, Georgia, serif;
   font-weight: 700;
-  font-size: 4.65cqw;
+  font-size: 5cqw;
 }
 
 .mtg__keyword + ul {

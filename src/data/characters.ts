@@ -201,18 +201,18 @@ export const characters: Character[] = [
       {
         title: 'President & Founder',
         org: 'Asian Student Association @ Purdue Indianapolis',
-        dates: 'Founding now',
+        dates: '2026',
         points: [
-          'Recruited a faculty advisor and drafting the constitution',
-          'Planning a 7-seat exec board',
-          'Planning a member discount card with local Asian restaurants',
+          'Put together an executive team',
+          'Organized cultural events across campus',
+          'Working with local Asian businesses',
         ],
       },
       {
         title: 'Member',
         org: 'Purdue Engineering Student Council',
         dates: '2025',
-        points: ['Helped plan events for engineering students'],
+        points: ['Helped plan events for engineering students', 'Helped run the biggest student-run career fair in North America'],
       },
       {
         title: 'Chief Operating & Marketing Officer',
@@ -244,7 +244,7 @@ export const characters: Character[] = [
         title: 'Lead Organizer',
         org: 'Apocalypse (Hack Club)',
         dates: '2023 – 2024',
-        points: ["Organized Canada's largest high school hackathon", 'Hosted at Shopify'],
+        points: ["Organized Canada's largest high school hackathon", 'In partnership with Shopify and Hack Club'],
       },
     ],
   },
@@ -301,15 +301,17 @@ export const characters: Character[] = [
     onAccent: '#140c22',
     overlay: '/marketing-outfit.png',
     shades: '/marketing-shades.png',
+    cardArt: {
+      image: '/marketingcard.jpg',
+      video: '/marketingcard.mov',
+      position: '50% 34%',
+      zoom: 1.4,
+      videoPosition: '50% 52%',
+      videoZoom: 1.25,
+    },
     icon: '📱',
     label: 'marketing',
     experiences: [
-      {
-        title: 'Content Creator',
-        org: 'Hack49',
-        dates: '2024 – Present',
-        points: ["Grew the org's reach", 'Created short-form video and social posts'],
-      },
       {
         title: 'Chief Operating & Marketing Officer',
         org: 'Hackathons North America',
@@ -321,11 +323,49 @@ export const characters: Character[] = [
         ],
       },
       {
+        title: 'Boiler Ambassador',
+        org: 'Purdue University',
+        dates: '2026 – Present',
+        points: [
+          'Creating videos for Purdue University',
+          'Plans, films and edits short-form content for Purdue’s socials',
+          'Shows prospective students what student life at Purdue is really like',
+        ],
+      },
+      {
         title: 'Head of Media',
         org: 'UHS Robotics (VEX)',
         location: 'Markham, ON',
         dates: '2021 – 2025',
         points: ['Made viral videos', 'Ran the team’s social media'],
+      },
+      {
+        title: 'Operations & Marketing Intern',
+        org: 'National Event Management',
+        location: 'Markham, ON',
+        dates: '2024 – 2025',
+        points: [
+          'Supported on-site operations at large events',
+          'Created marketing materials and social content',
+        ],
+      },
+      {
+        title: 'Marketing Intern',
+        org: 'Atlos Media',
+        location: 'Seattle, WA',
+        dates: '2025',
+        points: [
+          'Created videos for EdTech startups',
+          'Wrote scripts, filmed, and edited videos',
+          'Pre-cluely ABG CMO'
+        ],
+      },
+      {
+        title: 'Freelance Video Editing/Scripting',
+        org: 'Me Myself and I',
+        location: 'Markham, ON',
+        dates: '2020 – PRESENT',
+        points: ['Made fortnite edits to trap music during COVID', 'Worked with lots of youtubers and tiktokers'],
       },
     ],
   },
@@ -396,12 +436,6 @@ export const characters: Character[] = [
     experiences: [],
     sports: [
       {
-        name: 'Rock Climbing',
-        team: 'UHS Varsity',
-        years: '2022 – 2025',
-        highlights: ['3x regional champion'],
-      },
-      {
         name: 'Snowboarding',
         team: 'UHS Varsity',
         years: '2022 – 2025',
@@ -409,15 +443,26 @@ export const characters: Character[] = [
       },
       {
         name: 'Softball & Slo-Pitch',
-        team: 'UHS Varsity · CCSA Trinity Rep League',
+        team: 'UHS Varsity · CCSA - Trinity',
         years: '2024 – 2025',
-        highlights: ['MVP', 'Quarterfinalist'],
+        highlights: ['MVP'],
+      },
+      {
+        name: 'Rock Climbing',
+        team: 'UHS Varsity',
+        years: '2022 – 2025',
+        highlights: ['3x regional champion'],
+      },
+      {
+        name: 'Karate',
+        team: 'Superkids Karate',
+        years: '2017 – 2024',
+        highlights: ['Purple Belt'],
       },
       {
         name: 'Basketball',
-        team: 'UHS Varsity',
-        years: '2022 – 2023',
-        highlights: ['Quarterfinalist'],
+        team: 'AT6',
+        years: '2019-2020',
       },
       {
         name: 'Mountain Biking',
@@ -425,9 +470,9 @@ export const characters: Character[] = [
         years: '2022',
       },
       {
-        name: 'Basketball',
-        team: 'Above the 6ix Rep League',
-        years: '2019 – 2021',
+        name: 'Dance',
+        team: 'TDI',
+        years: '2009-2018',
       },
     ],
     photos: [],
