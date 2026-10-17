@@ -43,27 +43,36 @@ export function CharacterProfile({
           </div>
         </article>
 
-        <section className="resume" aria-labelledby="resume-heading">
-          <h2 id="resume-heading" className="eyebrow">
-            Experience
-          </h2>
-          <ul className="resume__list">
-            {character.experiences.map((entry, entryIndex) => (
-              <li key={`${entry.org}-${entryIndex}`} className="exp-card">
-                <div className="exp-card__head">
-                  <h3 className="exp-card__title">{entry.title}</h3>
-                  <p className="exp-card__dates">{entry.dates}</p>
-                </div>
-                <p className="exp-card__org">{entry.org}</p>
-                <ul className="exp-card__points">
-                  {entry.points.map((point) => (
-                    <li key={point}>{point}</li>
-                  ))}
-                </ul>
-              </li>
-            ))}
-          </ul>
-        </section>
+        {character.experiences.length > 0 ? (
+          <section className="resume" aria-labelledby="resume-heading">
+            <h2 id="resume-heading" className="eyebrow">
+              Experience
+            </h2>
+            <ul className="resume__list">
+              {character.experiences.map((entry, entryIndex) => (
+                <li key={`${entry.org}-${entryIndex}`} className="exp-card">
+                  <div className="exp-card__head">
+                    <h3 className="exp-card__title">{entry.title}</h3>
+                    {entry.dates ? <p className="exp-card__dates">{entry.dates}</p> : null}
+                  </div>
+                  <p className="exp-card__org">
+                    {entry.org}
+                    {entry.location ? (
+                      <span className="exp-card__location"> · {entry.location}</span>
+                    ) : null}
+                  </p>
+                  {entry.points?.length ? (
+                    <ul className="exp-card__points">
+                      {entry.points.map((point) => (
+                        <li key={point}>{point}</li>
+                      ))}
+                    </ul>
+                  ) : null}
+                </li>
+              ))}
+            </ul>
+          </section>
+        ) : null}
       </div>
 
       <p className="hint">

@@ -21,6 +21,7 @@ export function CharacterSelect({
   onConfirm: () => void
 }) {
   const character = characters[index] ?? characters[0]
+  const canChoose = character.choosable !== false
   const touchX = useRef<number | null>(null)
   const [paint, setPaint] = useState(character)
   const paintTimers = useRef<number[]>([])
@@ -43,7 +44,7 @@ export function CharacterSelect({
     function onKey(event: KeyboardEvent) {
       if (event.key === 'Enter') {
         event.preventDefault()
-        onConfirm()
+        if (canChoose) onConfirm()
         return
       }
 
@@ -56,7 +57,7 @@ export function CharacterSelect({
 
     window.addEventListener('keydown', onKey)
     return () => window.removeEventListener('keydown', onKey)
-  }, [index, onConfirm, onIndex])
+  }, [canChoose, index, onConfirm, onIndex])
 
   return (
     <Cabinet character={paint}>
@@ -75,8 +76,8 @@ export function CharacterSelect({
                 className={selected ? 'roster-card is-selected' : 'roster-card'}
                 style={{ '--accent': entry.accent } as CSSProperties}
                 onClick={() => {
-                  if (selected) onConfirm()
-                  else onIndex(entryIndex)
+                  if (!selected) onIndex(entryIndex)
+                  else if (canChoose) onConfirm()
                 }}
               >
                 <span className="roster-card__box">
@@ -138,14 +139,18 @@ export function CharacterSelect({
 
         <aside className="dossier">
           <FlipCard character={character} index={index} />
-          <button
-            type="button"
-            className="choose"
-            aria-label={`Choose ${character.name}`}
-            onClick={onConfirm}
-          >
-            <span>Choose</span>
-          </button>
+          {canChoose ? (
+            <button
+              type="button"
+              className="choose"
+              aria-label={`Choose ${character.name}`}
+              onClick={onConfirm}
+            >
+              <span>Choose</span>
+            </button>
+          ) : (
+            <p className="outfit-prompt">change my outfit --&gt;</p>
+          )}
         </aside>
       </div>
 
@@ -157,10 +162,12 @@ export function CharacterSelect({
             <kbd>→</kbd>
           </span>
         </span>
-        <span className="hint__group">
-          <span>Choose</span>
-          <kbd>Enter</kbd>
-        </span>
+        {canChoose ? (
+          <span className="hint__group">
+            <span>Choose</span>
+            <kbd>Enter</kbd>
+          </span>
+        ) : null}
       </p>
     </Cabinet>
   )

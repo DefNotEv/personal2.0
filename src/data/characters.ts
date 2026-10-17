@@ -9,8 +9,9 @@ export type CharacterId =
 export type Experience = {
   title: string
   org: string
-  dates: string
-  points: readonly string[]
+  location?: string
+  dates?: string
+  points?: readonly string[]
 }
 
 export type Character = {
@@ -29,24 +30,10 @@ export type Character = {
   notes?: readonly string[]
   icon: string
   label: string
+  /** False hides Choose; the version can be browsed but not opened. */
+  choosable?: boolean
   experiences: readonly Experience[]
 }
-
-// TODO: replace with real resume entries for each version.
-const PLACEHOLDER_EXPERIENCES: readonly Experience[] = [
-  {
-    title: 'Role title',
-    org: 'Organization',
-    dates: 'Mon YYYY – Present',
-    points: ['What you did', 'The impact it had'],
-  },
-  {
-    title: 'Role title',
-    org: 'Organization',
-    dates: 'Mon YYYY – Mon YYYY',
-    points: ['What you did', 'The impact it had'],
-  },
-]
 
 export const characters: Character[] = [
   {
@@ -65,7 +52,8 @@ export const characters: Character[] = [
     onAccent: '#1a100e',
     icon: '⭐',
     label: 'me!',
-    experiences: PLACEHOLDER_EXPERIENCES,
+    choosable: false,
+    experiences: [],
   },
   {
     id: 'motorsports',
@@ -84,7 +72,60 @@ export const characters: Character[] = [
     overlay: '/racing.png',
     icon: '🏎️',
     label: 'motorsports',
-    experiences: PLACEHOLDER_EXPERIENCES,
+    experiences: [
+      {
+        title: 'B.S. Motorsports Engineering',
+        org: 'Purdue University',
+        location: 'Indianapolis, IN',
+        dates: '2025 – 2029',
+        points: ['Management minor'],
+      },
+      {
+        title: 'Member',
+        org: 'Hammer Down Racing @ Purdue',
+        dates: '2026 – Present',
+        points: [
+          'Lemons endurance racing and Purdue Grand Prix',
+          'Helps prep and maintain the team’s cars between race weekends',
+        ],
+      },
+      {
+        title: 'Secretary & Founder',
+        org: 'Downtown Indy Rally Team (DIRT) @ Purdue',
+        dates: '2025 – 2026',
+        points: [
+          'Co-founded the rally team',
+          'Kept meeting records and handled member communications',
+        ],
+      },
+      {
+        title: 'Mechanical Member & Head of Business',
+        org: 'FRC Team 7902 Markham Firebirds',
+        location: 'Markham, ON',
+        dates: '2022 – 2025',
+        points: [
+          'FIRST Robotics Competition',
+          'Designed and built mechanisms for the competition robot',
+          'Led sponsorship outreach and the team’s business plan',
+        ],
+      },
+      {
+        title: 'Mechanical Member & Head of Media',
+        org: 'UHS Robotics (VEX)',
+        location: 'Markham, ON',
+        dates: '2021 – 2025',
+        points: ['Built competition robots', 'Made viral videos'],
+      },
+      {
+        title: 'Project Manager',
+        org: 'Real World Design Challenge',
+        dates: '2023',
+        points: [
+          "1st place nationally (Governor's Award)",
+          'Managed the team’s design timeline and deliverables',
+        ],
+      },
+    ],
   },
   {
     id: 'events',
@@ -103,7 +144,56 @@ export const characters: Character[] = [
     overlay: '/events.png',
     icon: '🎫',
     label: 'events',
-    experiences: PLACEHOLDER_EXPERIENCES,
+    experiences: [
+      {
+        title: 'President & Founder',
+        org: 'Asian Student Association @ Purdue Indianapolis',
+        dates: 'Founding now',
+        points: [
+          'Recruited a faculty advisor and drafting the constitution',
+          'Planning a 7-seat exec board',
+          'Planning a member discount card with local Asian restaurants',
+        ],
+      },
+      {
+        title: 'Member',
+        org: 'Purdue Engineering Student Council',
+        dates: '2025',
+        points: ['Helped plan events for engineering students'],
+      },
+      {
+        title: 'Chief Operating & Marketing Officer',
+        org: 'Hackathons North America',
+        location: 'Toronto, ON',
+        dates: '2024 – 2025',
+        points: [
+          'Ran day-to-day operations for the org’s hackathons',
+          'Coordinated sponsors, venues and volunteers',
+        ],
+      },
+      {
+        title: 'Operations & Marketing Intern',
+        org: 'National Event Management',
+        location: 'Markham, ON',
+        dates: '2024 – 2025',
+        points: [
+          'Supported on-site operations at large events',
+          'Created marketing materials and social content',
+        ],
+      },
+      {
+        title: 'Events Director',
+        org: 'Unionville High School Student Council',
+        dates: '2024 – 2025',
+        points: ['Elected by 500+ students', 'Planned and ran school-wide events'],
+      },
+      {
+        title: 'Lead Organizer',
+        org: 'Apocalypse (Hack Club)',
+        dates: '2023 – 2024',
+        points: ["Organized Canada's largest high school hackathon", 'Hosted at Shopify'],
+      },
+    ],
   },
   {
     id: 'broadcast',
@@ -118,7 +208,26 @@ export const characters: Character[] = [
     overlay: '/broadcasting.png',
     icon: '🎧',
     label: 'broadcasting',
-    experiences: PLACEHOLDER_EXPERIENCES,
+    experiences: [
+      {
+        title: 'Livestream Operator',
+        org: 'Hope Bible Church Markham',
+        dates: '2021 – 2025',
+        points: ['Operates cameras, ProPresenter and TriCasters', 'Trains new members'],
+      },
+      {
+        title: 'President & Founder',
+        org: 'UHS A/V Club',
+        dates: '2023 – 2024',
+        points: ['Founded the club', 'Taught members camera, audio and livestream basics'],
+      },
+      {
+        title: 'Co-Host',
+        org: 'The Drive Team Podcast',
+        dates: '2022 – 2023',
+        points: ['Created a VEX robotics podcast', '6 episodes (4 published), 1,000+ listeners'],
+      },
+    ],
   },
   {
     id: 'marketing',
@@ -136,7 +245,31 @@ export const characters: Character[] = [
     shades: '/marketing-shades.png',
     icon: '📱',
     label: 'marketing',
-    experiences: PLACEHOLDER_EXPERIENCES,
+    experiences: [
+      {
+        title: 'Content Creator',
+        org: 'Hack49',
+        dates: '2024 – Present',
+        points: ["Grew the org's reach", 'Created short-form video and social posts'],
+      },
+      {
+        title: 'Chief Operating & Marketing Officer',
+        org: 'Hackathons North America',
+        location: 'Toronto, ON',
+        dates: '2024 – 2025',
+        points: [
+          'Led marketing and social media for the org’s events',
+          'Designed graphics and promo content',
+        ],
+      },
+      {
+        title: 'Head of Media',
+        org: 'UHS Robotics (VEX)',
+        location: 'Markham, ON',
+        dates: '2021 – 2025',
+        points: ['Made viral videos', 'Ran the team’s social media'],
+      },
+    ],
   },
   {
     id: 'childcare',
@@ -152,7 +285,30 @@ export const characters: Character[] = [
     notes: ['/childcare-notes-left.png', '/childcare-notes-right.png'],
     icon: '🧸',
     label: 'childcare',
-    experiences: PLACEHOLDER_EXPERIENCES,
+    experiences: [
+      {
+        title: 'Babysitter',
+        org: 'On call',
+        dates: '2021 – Present',
+        points: ['Cares for kids of all ages, from meals to bedtime', 'Trusted by repeat families'],
+      },
+      {
+        title: 'Summer Camp Counselor',
+        org: 'Hope Bible Church Markham',
+        dates: '2022 – 2025',
+        points: ['Supervised children ages 0–13', 'Planned lessons and activities'],
+      },
+      {
+        title: 'Summer Camp Counselor',
+        org: 'Toronto City Mission',
+        dates: '2022 – 2025',
+        points: ['Supervised campers', 'Led games, crafts and activities'],
+      },
+      {
+        title: 'First Aid + CPR C',
+        org: 'Canadian Red Cross',
+      },
+    ],
   },
 ]
 
