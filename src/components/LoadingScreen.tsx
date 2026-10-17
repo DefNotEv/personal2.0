@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
+import { preloadImage, siteImages, siteVideos, warmVideos } from './preload.ts'
 
 function prefersReducedMotion(): boolean {
   return window.matchMedia('(prefers-reduced-motion: reduce)').matches
@@ -10,7 +11,9 @@ const LOADING_LINES = [
   'writing bad jokes...',
 ] as const
 
-const TITLE_FONTS = [
+const FONTS = [
+  '560 1em Fraunces',
+  '400 1em Outfit',
   '400 1em Speedway',
   '400 1em "Pinyon Script"',
   '400 1em Bulletin',
@@ -19,13 +22,25 @@ const TITLE_FONTS = [
   '400 1em Graduate',
 ]
 
-const STEP_MS = 520
-const FIRST_STEP_MS = 480
-const HOLD_MS = 800
+const IMAGES = siteImages()
+const TOTAL = IMAGES.length + FONTS.length
+
+// The log still plays out when everything is cached...
+const MIN_MS = 1600
+// ...and nobody gets stuck behind a file that never loads.
+const MAX_MS = 20000
+const HOLD_MS = 700
+const TICK_MS = 50
 
 export function LoadingScreen({ onFinish }: { onFinish: () => void }) {
-  const [lit, setLit] = useState(() => (prefersReducedMotion() ? LOADING_LINES.length : 0))
+  const [loaded, setLoaded] = useState(0)
+  const [elapsed, setElapsed] = useState(0)
   const finished = useRef(false)
+
+  const ready = loaded >= TOTAL || elapsed >= MAX_MS
+  const real = ready ? 1 : loaded / TOTAL
+  const shown = prefersReducedMotion() ? real : Math.min(real, elapsed / MIN_MS)
+  const lit = LOADING_LINES.filter((_, index) => shown >= (index + 1) / LOADING_LINES.length).length
 
   const finish = useCallback(() => {
     if (finished.current) return
@@ -34,45 +49,53 @@ export function LoadingScreen({ onFinish }: { onFinish: () => void }) {
   }, [onFinish])
 
   useEffect(() => {
-    TITLE_FONTS.forEach((font) => {
-      document.fonts.load(font).catch(() => {})
+    const done = () => setLoaded((count) => count + 1)
+    IMAGES.forEach((src) => {
+      preloadImage(src).then(done)
+    })
+    FONTS.forEach((font) => {
+      document.fonts.load(font).catch(() => {}).then(done)
     })
   }, [])
 
   useEffect(() => {
-    const timeouts: number[] = []
+    const start = performance.now()
+    const tick = window.setInterval(() => setElapsed(performance.now() - start), TICK_MS)
+    return () => window.clearInterval(tick)
+  }, [])
 
-    if (prefersReducedMotion()) {
-      timeouts.push(window.setTimeout(finish, 900))
-    } else {
-      LOADING_LINES.forEach((_, index) => {
-        timeouts.push(
-          window.setTimeout(() => setLit(index + 1), FIRST_STEP_MS + index * STEP_MS),
-        )
-      })
-      timeouts.push(
-        window.setTimeout(finish, FIRST_STEP_MS + LOADING_LINES.length * STEP_MS + HOLD_MS),
-      )
-    }
+  // Videos aren't worth holding the door for; the cards show their stills
+  // until a video has arrived.
+  useEffect(() => {
+    if (ready) warmVideos(siteVideos())
+  }, [ready])
 
-    return () => {
-      timeouts.forEach((timeout) => window.clearTimeout(timeout))
-    }
-  }, [finish])
+  useEffect(() => {
+    if (shown < 1) return
+    const hold = window.setTimeout(finish, HOLD_MS)
+    return () => window.clearTimeout(hold)
+  }, [shown, finish])
 
   useEffect(() => {
     function onKey(event: KeyboardEvent) {
       if (event.key !== 'Enter' && event.key !== ' ') return
       event.preventDefault()
-      finish()
+      if (ready) finish()
     }
 
     window.addEventListener('keydown', onKey)
     return () => window.removeEventListener('keydown', onKey)
-  }, [finish])
+  }, [finish, ready])
 
   return (
-    <div className="loader" onClick={finish} role="status" aria-live="polite">
+    <div
+      className="loader"
+      onClick={() => {
+        if (ready) finish()
+      }}
+      role="status"
+      aria-live="polite"
+    >
       <div className="loader__panel">
         <h1 className="loader__kicker">Now loading</h1>
         <p className="sr-only">{LOADING_LINES[lit - 1] ?? 'Loading'}</p>
@@ -84,10 +107,7 @@ export function LoadingScreen({ onFinish }: { onFinish: () => void }) {
           ))}
         </ul>
         <div className="loader__track" aria-hidden="true">
-          <div
-            className="loader__fill"
-            style={{ width: `${(lit / LOADING_LINES.length) * 100}%` }}
-          />
+          <div className="loader__fill" style={{ width: `${shown * 100}%` }} />
         </div>
       </div>
     </div>

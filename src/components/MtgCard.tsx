@@ -1,8 +1,17 @@
 import type { Character } from '../data/characters.ts'
+import { CardArtMedia } from './CardArtMedia.tsx'
 import { OutfitDrawing, PHOTO } from './CharacterCutout.tsx'
 
 // A Magic: The Gathering style card for a version's stats.
-export function MtgCard({ character }: { character: Character }) {
+export function MtgCard({
+  character,
+  active,
+  artDelay,
+}: {
+  character: Character
+  active: boolean
+  artDelay?: number
+}) {
   const experience = `${character.years} ${character.years === 1 ? 'year' : 'years'} of experience`
 
   return (
@@ -17,12 +26,16 @@ export function MtgCard({ character }: { character: Character }) {
         </div>
 
         <div className="mtg__art" aria-hidden="true">
-          <span className="portrait">
-            <img className="portrait__photo" src={PHOTO} alt="" />
-            <span className="doodle" data-outfit={character.id}>
-              <OutfitDrawing character={character} />
+          {character.cardArt ? (
+            <CardArtMedia art={character.cardArt} active={active} delay={artDelay} />
+          ) : (
+            <span className="portrait">
+              <img className="portrait__photo" src={PHOTO} alt="" />
+              <span className="doodle" data-outfit={character.id}>
+                <OutfitDrawing character={character} />
+              </span>
             </span>
-          </span>
+          )}
         </div>
 
         <div className="mtg__bar mtg__type">

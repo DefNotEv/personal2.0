@@ -27,6 +27,17 @@ export type Photo = {
   alt: string
 }
 
+export type CardArt = {
+  /** Still image; shown on its own, or once the video has finished. */
+  image: string
+  /** Plays once each time the card is selected. */
+  video?: string
+  /** CSS object-position for cropping into the wide art box. */
+  position?: string
+  /** Zoom in past a plain crop, centred on `position`. */
+  zoom?: number
+}
+
 export type Character = {
   id: CharacterId
   short: string
@@ -40,9 +51,11 @@ export type Character = {
   overlay?: string
   shades?: string
   /** Extra drawing layers that animate on their own, over the overlay. */
-  notes?: readonly string[]
+  layers?: readonly string[]
   icon: string
   label: string
+  /** Replaces the outfit portrait in the MTG card's art box. */
+  cardArt?: CardArt
   /** False hides Choose; the version can be browsed but not opened. */
   choosable?: boolean
   experiences: readonly Experience[]
@@ -86,6 +99,11 @@ export const characters: Character[] = [
     accent: '#ff3b30',
     onAccent: '#1a100e',
     overlay: '/racing.png',
+    cardArt: {
+      image: '/motorsportscardart.PNG',
+      video: '/motorsportscardart.mp4',
+      position: 'center 55%',
+    },
     icon: '🏎️',
     label: 'motorsports',
     experiences: [
@@ -298,7 +316,12 @@ export const characters: Character[] = [
     accent: '#f0b429',
     onAccent: '#1a100e',
     overlay: '/childcare-outfit.png',
-    notes: ['/childcare-notes-left.png', '/childcare-notes-right.png'],
+    cardArt: {
+      image: '/childcarecard.PNG',
+      video: '/childcarecard.mp4',
+      position: 'center 60%',
+    },
+    layers: ['/childcare-notes-left.png', '/childcare-notes-right.png'],
     icon: '🧸',
     label: 'childcare',
     experiences: [
@@ -336,6 +359,14 @@ export const characters: Character[] = [
     years: 7,
     accent: '#34d27b',
     onAccent: '#06180e',
+    overlay: '/sports-outfit.png',
+    cardArt: {
+      image: '/sportscard.PNG',
+      video: '/sportscard.mp4',
+      position: 'center 55%',
+      zoom: 1.35,
+    },
+    layers: ['/sports-cap.png'],
     icon: '🏂',
     label: 'sports',
     experiences: [],

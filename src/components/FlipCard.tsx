@@ -53,7 +53,7 @@ export function FlipCard({
               } as CSSProperties
             }
           >
-            <MtgCard character={face} />
+            <MtgCard character={face} active={faceIndex === front} artDelay={FLIP_MS / 2} />
           </div>
         ))}
       </div>

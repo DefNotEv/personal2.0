@@ -10,11 +10,11 @@ export function OutfitDrawing({ character }: { character: Character }) {
       {character.overlay ? (
         <img className="portrait__overlay" src={character.overlay} alt="" />
       ) : null}
-      {character.notes?.map((src, index) => (
+      {character.layers?.map((src, index) => (
         <img
           key={src}
-          className="portrait__overlay portrait__notes"
-          data-note={index}
+          className="portrait__overlay portrait__layer"
+          data-layer={index}
           src={src}
           alt=""
         />

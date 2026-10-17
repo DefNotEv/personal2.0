@@ -735,7 +735,7 @@ ol {
   height: 100%;
   display: flex;
   flex-direction: column;
-  gap: 5px;
+  gap: 4px;
   padding: 6px;
   border-radius: 8px;
   background:
@@ -808,7 +808,7 @@ ol {
 .mtg__art {
   position: relative;
   flex: none;
-  aspect-ratio: 2.25 / 1;
+  aspect-ratio: 1.9 / 1;
   overflow: hidden;
   border: 2px solid #0b0a09;
   border-radius: 2px;
@@ -829,11 +829,36 @@ ol {
   translate: -50% 0;
 }
 
+.mtg__media {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Only visible while playing, so the still shows when it ends. */
+.mtg__video {
+  opacity: 0;
+  transition: opacity 320ms ease;
+}
+
+.mtg__video.is-playing {
+  opacity: 1;
+}
+
 .mtg__type {
   font-family: Fraunces, Georgia, serif;
   font-weight: 600;
-  font-size: 0.7rem;
+  font-size: 0.66rem;
   line-height: 1.15;
+}
+
+.mtg__type > :first-child {
+  min-width: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .mtg__set {
@@ -846,7 +871,7 @@ ol {
   flex: 1;
   min-height: 0;
   overflow: hidden;
-  padding: 7px 9px;
+  padding: 6px 9px;
   border: 2px solid color-mix(in srgb, var(--accent) 30%, #0b0a09);
   border-radius: 2px;
   background: linear-gradient(180deg, #f3ecdf, #e6dccb);
@@ -1465,6 +1490,12 @@ kbd {
   transform: translateY(-5%);
 }
 
+/* Pivot is the cap's centre on the 1024 × 1536 canvas. */
+:is(.pedestal, .mtg__art) .doodle[data-outfit='sports'] .portrait__layer {
+  transform-origin: 52.5% 9.5%;
+  transform: translate(-1.5%, 1.5%) scale(1.12);
+}
+
 :is(.pedestal, .mtg__art) .doodle[data-outfit='childcare'] .portrait__overlay {
   transform: translateX(-2.5%) scale(0.95);
 }
@@ -1503,12 +1534,22 @@ kbd {
   animation-timing-function: ease-out;
 }
 
-.pedestal .doodle[data-outfit='childcare']:not(.is-leave) .portrait__notes {
+.pedestal .doodle[data-outfit='sports']:not(.is-leave) .portrait__overlay:not(.portrait__layer) {
+  animation-name: doodle-sports;
+  animation-timing-function: ease-in-out;
+}
+
+.pedestal .doodle[data-outfit='sports']:not(.is-leave) .portrait__layer {
+  animation-name: doodle-cap;
+  animation-timing-function: cubic-bezier(0.3, 0.7, 0.4, 1);
+}
+
+.pedestal .doodle[data-outfit='childcare']:not(.is-leave) .portrait__layer {
   animation-name: doodle-notes;
   animation-timing-function: ease-in-out;
 }
 
-.pedestal .doodle[data-outfit='childcare']:not(.is-leave) .portrait__notes[data-note='1'] {
+.pedestal .doodle[data-outfit='childcare']:not(.is-leave) .portrait__layer[data-layer='1'] {
   animation-delay: 0.775s;
 }
 
@@ -1650,6 +1691,55 @@ kbd {
   }
   78% {
     filter: none;
+  }
+}
+
+/* The jacket dips as the cap lands. */
+@keyframes doodle-sports {
+  0%,
+  44%,
+  62%,
+  100% {
+    translate: 0 0;
+    scale: 1;
+  }
+  51% {
+    translate: 0 0.8%;
+    scale: 1.015 0.985;
+  }
+}
+
+/* Cap twirls in from the upper left and lands on the head. */
+@keyframes doodle-cap {
+  0% {
+    translate: -45% -30%;
+    rotate: -720deg;
+    scale: 0.5;
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+  }
+  40% {
+    translate: 0 -6%;
+    rotate: -20deg;
+    scale: 1.05;
+  }
+  48% {
+    translate: 0 0;
+    rotate: 7deg;
+    scale: 1;
+  }
+  56% {
+    translate: 0 -1%;
+    rotate: -3deg;
+  }
+  64%,
+  100% {
+    translate: 0 0;
+    rotate: 0deg;
+    scale: 1;
+    opacity: 1;
   }
 }
 
