@@ -328,10 +328,34 @@ ol {
   flex: 1;
   display: grid;
   grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
-  gap: 1.25rem;
+  /* Title on its own row, so the roster, figure and card center together below it. */
+  grid-template-rows: auto minmax(0, 1fr);
+  gap: 0.15rem 1.25rem;
   align-items: center;
   min-height: 0;
   min-width: 0;
+}
+
+.select > .pedestal__heading {
+  grid-column: 2;
+  grid-row: 1;
+}
+
+.select > .roster {
+  grid-column: 1;
+  grid-row: 2;
+  /* Same space the figure leaves below itself for the platform. */
+  margin-bottom: 32px;
+}
+
+.select > .pedestal {
+  grid-column: 2;
+  grid-row: 2;
+}
+
+.select > .dossier {
+  grid-column: 3;
+  grid-row: 2;
 }
 
 .roster {
@@ -412,6 +436,29 @@ ol {
   outline: none;
 }
 
+.roster-card.is-mystery {
+  cursor: default;
+}
+
+.roster-card.is-mystery .roster-card__box {
+  border-style: dashed;
+  background: transparent;
+}
+
+.roster-card.is-mystery:hover .roster-card__box {
+  border-color: var(--line-faint);
+}
+
+.roster-card.is-mystery .roster-card__icon {
+  font-family: Fraunces, Georgia, serif;
+  font-weight: 560;
+  color: var(--muted);
+}
+
+.roster-card.is-mystery .roster-card__label {
+  color: var(--muted);
+}
+
 .pedestal {
   position: relative;
   height: auto;
@@ -428,7 +475,7 @@ ol {
 .pedestal__heading {
   z-index: 3;
   width: 100%;
-  margin: 0 0 0.15rem;
+  margin: 0;
   text-align: center;
 }
 
@@ -510,7 +557,7 @@ ol {
 .pedestal__arrow {
   position: absolute;
   z-index: 4;
-  top: 52%;
+  top: 39%;
   width: 44px;
   height: 44px;
   display: grid;
@@ -667,20 +714,160 @@ ol {
 
 .flip-card__face {
   grid-area: 1 / 1;
-  padding: 1.1rem 1.15rem 1.2rem;
-  border: 1px solid var(--line);
-  border-top: 3px solid var(--accent);
   border-radius: 14px;
-  background: var(--card);
   box-shadow:
-    0 18px 40px rgba(0, 0, 0, 0.28),
-    0 0 24px color-mix(in srgb, var(--accent) 14%, transparent);
+    0 18px 40px rgba(0, 0, 0, 0.35),
+    0 0 24px color-mix(in srgb, var(--accent) 18%, transparent);
   backface-visibility: hidden;
   -webkit-backface-visibility: hidden;
 }
 
-.flip-card__face.is-sizer {
-  visibility: hidden;
+/* Magic: The Gathering style stats card (63 × 88 like the real thing). */
+.mtg {
+  aspect-ratio: 63 / 88;
+  padding: 9px;
+  border-radius: 14px;
+  background: #0b0a09;
+  color: #16130f;
+}
+
+.mtg__frame {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  padding: 6px;
+  border-radius: 8px;
+  background:
+    radial-gradient(120% 80% at 30% 10%, rgba(255, 255, 255, 0.14), transparent 60%),
+    linear-gradient(
+      160deg,
+      color-mix(in srgb, var(--accent) 70%, #2a2520),
+      color-mix(in srgb, var(--accent) 45%, #14110e)
+    );
+}
+
+.mtg__bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 6px;
+  padding: 3px 8px;
+  border: 2px solid color-mix(in srgb, var(--accent) 35%, #0b0a09);
+  border-radius: 10px / 50%;
+  background: linear-gradient(
+    180deg,
+    color-mix(in srgb, var(--accent) 14%, #f6f1e8),
+    color-mix(in srgb, var(--accent) 22%, #d8cdbb)
+  );
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.6);
+}
+
+.mtg__title {
+  min-height: 28px;
+}
+
+.mtg__name {
+  font-family: Fraunces, Georgia, serif;
+  font-weight: 600;
+  font-size: 0.86rem;
+  letter-spacing: -0.01em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.mtg__cost {
+  display: flex;
+  gap: 2px;
+  flex: none;
+}
+
+.mtg__pip {
+  display: grid;
+  place-items: center;
+  min-width: 17px;
+  height: 17px;
+  padding: 0 3px;
+  border-radius: 999px;
+  font-family: Fraunces, Georgia, serif;
+  font-weight: 700;
+  font-size: 0.66rem;
+  line-height: 1;
+  box-shadow: -1px 1px 0 rgba(0, 0, 0, 0.55);
+}
+
+.mtg__pip.is-generic {
+  background: #cbc4bc;
+}
+
+.mtg__pip.is-color {
+  background: radial-gradient(circle at 35% 30%, color-mix(in srgb, var(--accent) 45%, white), var(--accent) 70%);
+}
+
+.mtg__art {
+  position: relative;
+  flex: none;
+  aspect-ratio: 2.25 / 1;
+  overflow: hidden;
+  border: 2px solid #0b0a09;
+  border-radius: 2px;
+  background:
+    radial-gradient(90% 120% at 50% 100%, color-mix(in srgb, var(--accent) 40%, transparent), transparent 70%),
+    #16130f;
+}
+
+/* Same box shape as the pedestal, so each outfit lines up the same way;
+   cropped to head and shoulders. */
+.mtg__art .portrait {
+  position: absolute;
+  left: 50%;
+  top: -14%;
+  width: 118%;
+  height: auto;
+  aspect-ratio: 390 / 448;
+  translate: -50% 0;
+}
+
+.mtg__type {
+  font-family: Fraunces, Georgia, serif;
+  font-weight: 600;
+  font-size: 0.7rem;
+  line-height: 1.15;
+}
+
+.mtg__set {
+  flex: none;
+  font-size: 0.85rem;
+  line-height: 1;
+}
+
+.mtg__rules {
+  flex: 1;
+  min-height: 0;
+  overflow: hidden;
+  padding: 7px 9px;
+  border: 2px solid color-mix(in srgb, var(--accent) 30%, #0b0a09);
+  border-radius: 2px;
+  background: linear-gradient(180deg, #f3ecdf, #e6dccb);
+  font-size: 0.75rem;
+  line-height: 1.25;
+}
+
+.mtg__keyword {
+  margin: 0;
+  font-family: Fraunces, Georgia, serif;
+  font-weight: 700;
+  font-size: 0.8rem;
+}
+
+.mtg__keyword + ul {
+  margin: 1px 0 5px;
+  padding-left: 0.95rem;
+}
+
+.mtg__rules ul:last-child {
+  margin-bottom: 0;
 }
 
 .flip-card__face.is-back {
@@ -778,6 +965,12 @@ ol {
   font-family: 'Marketing Script', 'Brush Script MT', cursive;
   font-weight: 400;
   letter-spacing: 0;
+}
+
+[data-title='sports'] .title__lead {
+  font-family: Graduate, 'Arial Black', serif;
+  font-weight: 400;
+  letter-spacing: 0.02em;
 }
 
 [data-title='childcare'] .title__lead {
@@ -1024,6 +1217,183 @@ kbd {
   font-weight: 500;
 }
 
+.athletics {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 1.75rem;
+  align-items: start;
+  min-width: 0;
+}
+
+.sports-list {
+  display: grid;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.sport {
+  display: grid;
+  gap: 0.2rem;
+  padding: 0.8rem 0;
+  border-bottom: 1px solid var(--line-soft);
+  animation: rise 320ms ease both;
+}
+
+.sport:first-child {
+  padding-top: 0;
+}
+
+.sport__head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 0.75rem;
+}
+
+.sport__name {
+  margin: 0;
+  font-family: Fraunces, Georgia, serif;
+  font-weight: 560;
+  font-size: 1.15rem;
+}
+
+.sport__years {
+  margin: 0;
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+  white-space: nowrap;
+}
+
+.sport__team {
+  margin: 0;
+  color: var(--muted);
+}
+
+.sport__highlights {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  margin: 0.25rem 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.sport__highlights li {
+  padding: 0.15rem 0.55rem;
+  border: 1px solid var(--accent);
+  border-radius: 999px;
+  color: var(--accent);
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+}
+
+.carousel {
+  display: grid;
+  gap: 0.7rem;
+}
+
+.carousel__frame {
+  position: relative;
+  overflow: hidden;
+  aspect-ratio: 4 / 5;
+  border: 1px solid var(--line);
+  border-top: 3px solid var(--accent);
+  border-radius: 14px;
+  background: var(--card);
+  box-shadow: 0 14px 32px rgba(0, 0, 0, 0.24);
+}
+
+.carousel__track {
+  display: flex;
+  height: 100%;
+  transition: transform 420ms cubic-bezier(0.22, 0.8, 0.24, 1);
+}
+
+.carousel__slide {
+  flex: 0 0 100%;
+  height: 100%;
+  margin: 0;
+}
+
+.carousel__slide img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.carousel__arrow {
+  position: absolute;
+  top: 50%;
+  translate: 0 -50%;
+  width: 44px;
+  height: 44px;
+  display: grid;
+  place-items: center;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: #f6f1e8;
+  cursor: pointer;
+  filter: drop-shadow(0 1px 3px rgba(0, 0, 0, 0.8));
+  transition: scale 220ms ease;
+}
+
+.carousel__arrow.is-prev {
+  left: 4px;
+}
+
+.carousel__arrow.is-next {
+  right: 4px;
+}
+
+.carousel__arrow svg {
+  width: 30px;
+  height: 30px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 3;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.carousel__arrow:hover,
+.carousel__arrow:focus-visible {
+  scale: 1.15;
+}
+
+.carousel__dots {
+  display: flex;
+  justify-content: center;
+  gap: 6px;
+}
+
+.carousel__dot {
+  width: 8px;
+  height: 8px;
+  padding: 0;
+  border: 0;
+  border-radius: 999px;
+  background: var(--line);
+  cursor: pointer;
+  transition: width 220ms ease, background-color 220ms ease;
+}
+
+.carousel__dot[aria-current='true'] {
+  width: 22px;
+  background: var(--accent);
+}
+
+@media (max-width: 1100px) {
+  .athletics {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
 .exp-card__location {
   color: var(--muted);
   font-weight: 400;
@@ -1075,27 +1445,27 @@ kbd {
   transform-origin: center center;
 }
 
-.pedestal .doodle[data-outfit='motorsports'] .portrait__overlay {
+:is(.pedestal, .mtg__art) .doodle[data-outfit='motorsports'] .portrait__overlay {
   transform: translate(-2%, -1%) scale(0.94, 1.05);
 }
 
-.pedestal .doodle[data-outfit='events'] .portrait__overlay {
+:is(.pedestal, .mtg__art) .doodle[data-outfit='events'] .portrait__overlay {
   transform: translateY(5%) scale(0.84);
 }
 
-.pedestal .doodle[data-outfit='broadcast'] .portrait__overlay {
+:is(.pedestal, .mtg__art) .doodle[data-outfit='broadcast'] .portrait__overlay {
   transform: translateX(-1.5%);
 }
 
-.pedestal .doodle[data-outfit='marketing'] .portrait__overlay {
+:is(.pedestal, .mtg__art) .doodle[data-outfit='marketing'] .portrait__overlay {
   transform: translateY(-9.5%);
 }
 
-.pedestal .doodle[data-outfit='marketing'] .portrait__shades {
+:is(.pedestal, .mtg__art) .doodle[data-outfit='marketing'] .portrait__shades {
   transform: translateY(-5%);
 }
 
-.pedestal .doodle[data-outfit='childcare'] .portrait__overlay {
+:is(.pedestal, .mtg__art) .doodle[data-outfit='childcare'] .portrait__overlay {
   transform: translateX(-2.5%) scale(0.95);
 }
 

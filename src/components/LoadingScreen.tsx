@@ -16,6 +16,7 @@ const TITLE_FONTS = [
   '400 1em Bulletin',
   '400 1em "Marketing Script"',
   '400 1em "Kids Alphabet"',
+  '400 1em Graduate',
 ]
 
 const STEP_MS = 520

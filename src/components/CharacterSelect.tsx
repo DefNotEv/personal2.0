@@ -11,6 +11,11 @@ import { FLIP_MS, FlipCard } from './FlipCard.tsx'
 import { PedestalFigure } from './PedestalFigure.tsx'
 import { useRosterScroll } from './useRosterScroll.ts'
 
+// Matches the three columns of .roster in index.css.
+const ROSTER_COLUMNS = 3
+// Locked "?" tiles that square off the last roster row.
+const MYSTERY_TILES = (ROSTER_COLUMNS - (characters.length % ROSTER_COLUMNS)) % ROSTER_COLUMNS
+
 export function CharacterSelect({
   index,
   onIndex,
@@ -62,6 +67,12 @@ export function CharacterSelect({
   return (
     <Cabinet character={paint}>
       <div className="select">
+        <div className="pedestal__heading">
+          <p className="pedestal__kicker">choose your evelyn</p>
+          <h2 className="stage__name pedestal__title" data-title={character.id}>
+            <CharacterName character={character} />
+          </h2>
+        </div>
         <div className="roster" role="listbox" aria-label="Versions of Evelyn">
           {characters.map((entry, entryIndex) => {
             const selected = entryIndex === index
@@ -89,6 +100,14 @@ export function CharacterSelect({
               </button>
             )
           })}
+          {Array.from({ length: MYSTERY_TILES }, (_, tileIndex) => (
+            <span key={`mystery-${tileIndex}`} className="roster-card is-mystery" aria-hidden="true">
+              <span className="roster-card__box">
+                <span className="roster-card__icon">?</span>
+              </span>
+              <span className="roster-card__label">???</span>
+            </span>
+          ))}
         </div>
 
         <div
@@ -106,12 +125,6 @@ export function CharacterSelect({
             onIndex((index + (delta < 0 ? 1 : -1) + characters.length) % characters.length)
           }}
         >
-          <div className="pedestal__heading">
-            <p className="pedestal__kicker">choose your evelyn</p>
-            <h2 className="stage__name pedestal__title" data-title={character.id}>
-              <CharacterName character={character} />
-            </h2>
-          </div>
           <div className="pedestal__glow" aria-hidden="true" />
           <div className="pedestal__platform" aria-hidden="true" />
           <PedestalFigure character={character} index={index} />

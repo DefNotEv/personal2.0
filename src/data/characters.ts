@@ -4,6 +4,7 @@ export type CharacterId =
   | 'broadcast'
   | 'marketing'
   | 'childcare'
+  | 'sports'
   | 'all-around'
 
 export type Experience = {
@@ -12,6 +13,18 @@ export type Experience = {
   location?: string
   dates?: string
   points?: readonly string[]
+}
+
+export type Sport = {
+  name: string
+  team: string
+  years: string
+  highlights?: readonly string[]
+}
+
+export type Photo = {
+  src: string
+  alt: string
 }
 
 export type Character = {
@@ -33,6 +46,9 @@ export type Character = {
   /** False hides Choose; the version can be browsed but not opened. */
   choosable?: boolean
   experiences: readonly Experience[]
+  sports?: readonly Sport[]
+  /** Files under public/, shown in a carousel on the character file. */
+  photos?: readonly Photo[]
 }
 
 export const characters: Character[] = [
@@ -40,11 +56,11 @@ export const characters: Character[] = [
     id: 'all-around',
     short: 'All-Around',
     name: 'All-Around Evelyn',
-    role: 'Just another human',
-    strengths: ['Raptors ball knowledge', 'ESP32s', 'Making connections'],
+    role: 'Human',
+    strengths: ['Vibecoding', 'ESP32s', 'Making connections'],
     years: 19,
     weaknesses: [
-      'Canto but can\'t speak Cantonese',
+      'Slay the Spire playtime',
       'Light mode (i refuse to code this in)',
       'Spends half her money on Magic: The Gathering',
     ],
@@ -199,7 +215,7 @@ export const characters: Character[] = [
     id: 'broadcast',
     short: 'Broadcasting',
     name: 'Broadcasting Evelyn',
-    role: 'Livestream Operator',
+    role: 'Live Director',
     strengths: ['Camera switching', 'Audio mixing', 'Staying calm on headset'],
     weaknesses: ["Murphy's Law", 'ProPresenter updates', "The company forgetting to turn on their mics"],
     years: 6,
@@ -277,7 +293,7 @@ export const characters: Character[] = [
     name: 'Childcare Evelyn',
     role: 'Guardian',
     strengths: ['First aid', 'Lullabies', 'Nerf gun sharpshooter'],
-    weaknesses: ['Will talk about Minecraft for hours', 'Watches paw patrol after the kids are done', 'The purple wiggle'],
+    weaknesses: ['Will talk about Minecraft for hours', 'Watches paw patrol after the kids are done', 'Eats half the animal crackers'],
     years: 9,
     accent: '#f0b429',
     onAccent: '#1a100e',
@@ -309,6 +325,57 @@ export const characters: Character[] = [
         org: 'Canadian Red Cross',
       },
     ],
+  },
+  {
+    id: 'sports',
+    short: 'Sports',
+    name: 'Sports Evelyn',
+    role: 'Athlete',
+    strengths: ['Raptors ball knowledge', 'Snowboard racing', 'Third base'],
+    weaknesses: ['Racket sports', 'Bad warmup music', 'The gym'],
+    years: 7,
+    accent: '#34d27b',
+    onAccent: '#06180e',
+    icon: '🏂',
+    label: 'sports',
+    experiences: [],
+    sports: [
+      {
+        name: 'Rock Climbing',
+        team: 'UHS Varsity',
+        years: '2022 – 2025',
+        highlights: ['3x regional champion'],
+      },
+      {
+        name: 'Snowboarding',
+        team: 'UHS Varsity',
+        years: '2022 – 2025',
+        highlights: ['Provincial qualifier', '49th in Ontario'],
+      },
+      {
+        name: 'Softball & Slo-Pitch',
+        team: 'UHS Varsity · CCSA Trinity Rep League',
+        years: '2024 – 2025',
+        highlights: ['MVP', 'Quarterfinalist'],
+      },
+      {
+        name: 'Basketball',
+        team: 'UHS Varsity',
+        years: '2022 – 2023',
+        highlights: ['Quarterfinalist'],
+      },
+      {
+        name: 'Mountain Biking',
+        team: 'UHS Varsity',
+        years: '2022',
+      },
+      {
+        name: 'Basketball',
+        team: 'Above the 6ix Rep League',
+        years: '2019 – 2021',
+      },
+    ],
+    photos: [],
   },
 ]
 

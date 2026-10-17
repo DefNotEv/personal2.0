@@ -2,7 +2,7 @@ import { useState } from 'react'
 import type { CSSProperties } from 'react'
 import { characters, slideDirection } from '../data/characters.ts'
 import type { Character } from '../data/characters.ts'
-import { CharacterSheet } from './CharacterSheet.tsx'
+import { MtgCard } from './MtgCard.tsx'
 
 type Faces = [Character, Character]
 
@@ -40,11 +40,6 @@ export function FlipCard({
           transitionDuration: `${FLIP_MS}ms`,
         }}
       >
-        {characters.map((entry) => (
-          <div key={entry.id} className="flip-card__face is-sizer" aria-hidden inert>
-            <CharacterSheet character={entry} />
-          </div>
-        ))}
         {card.faces.map((face, faceIndex) => (
           <div
             key={faceIndex}
@@ -58,7 +53,7 @@ export function FlipCard({
               } as CSSProperties
             }
           >
-            <CharacterSheet character={face} />
+            <MtgCard character={face} />
           </div>
         ))}
       </div>
