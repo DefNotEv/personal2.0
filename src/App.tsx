@@ -21,14 +21,20 @@ function prefersReducedMotion(): boolean {
   return window.matchMedia('(prefers-reduced-motion: reduce)').matches
 }
 
-function pageFromHash(): Page {
-  const path = window.location.hash.replace(/^#\/?/, '')
-  return path === 'blog' || path === 'contact' ? path : 'characters'
+type Route = { page: Page; post?: string }
+
+/** #/ → character select, #/blog, #/blog/<post>, #/contact. */
+function routeFromHash(): Route {
+  const [section, post] = window.location.hash.replace(/^#\/?/, '').split('/')
+  if (section === 'blog') return { page: 'blog', post: post || undefined }
+  if (section === 'contact') return { page: 'contact' }
+  return { page: 'characters' }
 }
 
 export default function App() {
   const [screen, setScreen] = useState<Screen>('loading')
-  const [page, setPage] = useState<Page>(pageFromHash)
+  const [route, setRoute] = useState<Route>(routeFromHash)
+  const page = route.page
   const [loading, setLoading] = useState(true)
   const [intro, setIntro] = useState(false)
   const [curtain, setCurtain] = useState<Curtain | null>(null)
@@ -65,9 +71,9 @@ export default function App() {
 
   useEffect(() => {
     function onHashChange() {
-      const next = pageFromHash()
-      pageRef.current = next
-      setPage(next)
+      const next = routeFromHash()
+      pageRef.current = next.page
+      setRoute(next)
       // Character Select always lands on the roster, not a character file.
       setScreen((current) => (current === 'profile' ? 'select' : current))
       window.scrollTo(0, 0)
@@ -104,7 +110,7 @@ export default function App() {
         {ready && page === 'characters' && screen === 'profile' ? (
           <CharacterProfile index={index} onBack={showRoster} />
         ) : null}
-        {ready && page === 'blog' ? <BlogPage character={character} /> : null}
+        {ready && page === 'blog' ? <BlogPage character={character} post={route.post} /> : null}
         {ready && page === 'contact' ? <ContactPage character={character} /> : null}
         {intro ? <IntroScreen onReveal={showRoster} onGone={hideIntro} /> : null}
         {loading ? <LoadingScreen onFinish={beginHandoff} /> : null}
