@@ -25,6 +25,8 @@ export type Character = {
   onAccent: string
   overlay?: string
   shades?: string
+  /** Extra drawing layers that animate on their own, over the overlay. */
+  notes?: readonly string[]
   icon: string
   label: string
   experiences: readonly Experience[]
@@ -88,7 +90,7 @@ export const characters: Character[] = [
     id: 'events',
     short: 'Events',
     name: 'Events Evelyn',
-    role: 'Event Ops Intern',
+    role: 'Organizer',
     strengths: ['Crisis control', 'Spreadsheets', 'Running up 10 flights of stairs'],
     weaknesses: [
       'People who ask for more free stuff',
@@ -146,7 +148,8 @@ export const characters: Character[] = [
     years: 9,
     accent: '#f0b429',
     onAccent: '#1a100e',
-    overlay: '/childcare.png',
+    overlay: '/childcare-outfit.png',
+    notes: ['/childcare-notes-left.png', '/childcare-notes-right.png'],
     icon: '🧸',
     label: 'childcare',
     experiences: PLACEHOLDER_EXPERIENCES,

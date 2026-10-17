@@ -1103,9 +1103,13 @@ kbd {
   animation-timing-function: ease-out;
 }
 
-.pedestal .doodle[data-outfit='childcare']:not(.is-leave) .portrait__overlay {
-  animation-name: doodle-childcare;
+.pedestal .doodle[data-outfit='childcare']:not(.is-leave) .portrait__notes {
+  animation-name: doodle-notes;
   animation-timing-function: ease-in-out;
+}
+
+.pedestal .doodle[data-outfit='childcare']:not(.is-leave) .portrait__notes[data-note='1'] {
+  animation-delay: 0.775s;
 }
 
 /* Engine rumble, then a lurch forward off the line. */
@@ -1249,26 +1253,23 @@ kbd {
   }
 }
 
-/* A lullaby rock. */
-@keyframes doodle-childcare {
+/* Notes bop to the beat; the second cluster is half a beat behind. */
+@keyframes doodle-notes {
   0%,
+  25%,
+  50%,
+  75%,
   100% {
-    rotate: 0deg;
+    translate: 0 0;
   }
-  15% {
-    rotate: -3deg;
+  12% {
+    translate: -0.6% -3%;
   }
-  35% {
-    rotate: 3deg;
+  37% {
+    translate: 0.6% -3%;
   }
-  55% {
-    rotate: -2deg;
-  }
-  75% {
-    rotate: 1.5deg;
-  }
-  90% {
-    rotate: 0deg;
+  62% {
+    translate: -0.6% -3%;
   }
 }
 
