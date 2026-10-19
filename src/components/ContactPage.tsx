@@ -31,6 +31,20 @@ export function ContactPage({ character }: { character: Character }) {
                 </a>
               </li>
             ))}
+            <li>
+              <a
+                className="contact-links__old-site"
+                href="https://evelynwong.vercel.app"
+                target="_blank"
+                rel="noreferrer"
+              >
+                <svg className="social-icon" viewBox="0 0 24 24" aria-hidden="true">
+                  <circle cx="12" cy="12" r="9" />
+                  <path d="M3 12h18M12 3c2.5 2.7 3.6 5.8 3.6 9s-1.1 6.3-3.6 9c-2.5-2.7-3.6-5.8-3.6-9S9.5 5.7 12 3Z" />
+                </svg>
+                <span>My old website (those who know)</span>
+              </a>
+            </li>
           </ul>
         ) : null}
       </section>

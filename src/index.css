@@ -2171,6 +2171,10 @@ kbd {
   transition: color 180ms ease, border-color 180ms ease;
 }
 
+.contact-links .contact-links__old-site {
+  border-style: dashed;
+}
+
 .contact-links a:hover,
 .contact-links a:focus-visible {
   color: var(--accent);
