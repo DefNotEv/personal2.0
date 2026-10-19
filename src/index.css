@@ -2070,28 +2070,35 @@ kbd {
   .menu-toggle {
     position: fixed;
     z-index: 45;
-    top: 6px;
-    right: 6px;
+    top: 12px;
+    right: 16px;
     display: grid;
     place-items: center;
-    width: 34px;
-    height: 34px;
+    width: 44px;
+    height: 44px;
     padding: 0;
-    border: 1px solid var(--line);
-    border-radius: 10px;
-    background: var(--card);
+    border: 0;
+    background: none;
     color: var(--cream);
     cursor: pointer;
+    filter: drop-shadow(0 1px 3px rgba(0, 0, 0, 0.6));
+    transition: color 180ms ease;
+  }
+
+  .menu-toggle:hover,
+  .menu-toggle:focus-visible {
+    color: var(--accent);
+    outline: none;
   }
 
   .menu-toggle span {
-    width: 16px;
-    height: 2px;
-    border-radius: 2px;
+    width: 26px;
+    height: 3px;
+    border-radius: 3px;
     background: currentColor;
     box-shadow:
-      0 -5px 0 currentColor,
-      0 5px 0 currentColor;
+      0 -8px 0 currentColor,
+      0 8px 0 currentColor;
   }
 
   .sidebar__scrim {
