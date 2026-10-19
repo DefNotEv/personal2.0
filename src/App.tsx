@@ -1,4 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
+import { track } from '@vercel/analytics'
+import { Analytics } from '@vercel/analytics/react'
 import { BlogPage } from './components/BlogPage.tsx'
 import { CharacterProfile } from './components/CharacterProfile.tsx'
 import { CharacterSelect } from './components/CharacterSelect.tsx'
@@ -24,6 +26,18 @@ function prefersReducedMotion(): boolean {
 type Route = { page: Page; post?: string }
 
 /** #/ → character select, #/blog, #/blog/<post>, #/contact. */
+/**
+ * Analytics can't see #/ routes, so report each view as a real path, with a
+ * route template so Vercel groups e.g. every post under /blog/[slug].
+ */
+function analyticsPage(route: Route, screen: Screen, characterId: string) {
+  if (route.page === 'blog' && route.post) return { route: '/blog/[slug]', path: `/blog/${route.post}` }
+  if (route.page === 'blog') return { route: '/blog', path: '/blog' }
+  if (route.page === 'contact') return { route: '/contact', path: '/contact' }
+  if (screen === 'profile') return { route: '/character/[id]', path: `/character/${characterId}` }
+  return { route: '/', path: '/' }
+}
+
 function routeFromHash(): Route {
   const [section, post] = window.location.hash.replace(/^#\/?/, '').split('/')
   if (section === 'blog') return { page: 'blog', post: post || undefined }
@@ -49,7 +63,10 @@ export default function App() {
   const character = characters[index] ?? characters[0]
 
   const showRoster = useCallback(() => setScreen('select'), [])
-  const showProfile = useCallback(() => setScreen('profile'), [])
+  const showProfile = useCallback(() => {
+    track('Choose version', { version: characters[index]?.id ?? 'unknown' })
+    setScreen('profile')
+  }, [index])
   const hideIntro = useCallback(() => setIntro(false), [])
 
   // The intro only greets people arriving at character select.
@@ -119,6 +136,7 @@ export default function App() {
         ) : null}
       </main>
       <PixelCursor />
+      <Analytics {...analyticsPage(route, screen, character.id)} />
     </>
   )
 }

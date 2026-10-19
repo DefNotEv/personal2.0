@@ -1,3 +1,4 @@
+import { track } from '@vercel/analytics'
 import type { Character } from '../data/characters.ts'
 import { contactEmail, socials } from '../data/socials.ts'
 import { Cabinet } from './Cabinet.tsx'
@@ -16,7 +17,11 @@ export function ContactPage({ character }: { character: Character }) {
         <p className="page__lede">Want to work together, or just say hi? My inbox is open.</p>
 
         {contactEmail ? (
-          <a className="choose page__cta" href={`mailto:${contactEmail}`}>
+          <a
+            className="choose page__cta"
+            href={`mailto:${contactEmail}`}
+            onClick={() => track('Email click')}
+          >
             <span>Email me</span>
           </a>
         ) : null}
@@ -25,7 +30,12 @@ export function ContactPage({ character }: { character: Character }) {
           <ul className="contact-links">
             {links.map((social) => (
               <li key={social.id}>
-                <a href={social.href} target="_blank" rel="noreferrer">
+                <a
+                  href={social.href}
+                  target="_blank"
+                  rel="noreferrer"
+                  onClick={() => track('Social click', { network: social.name, from: 'contact' })}
+                >
                   <SocialIcon id={social.id} />
                   <span>{social.name}</span>
                 </a>
@@ -37,6 +47,7 @@ export function ContactPage({ character }: { character: Character }) {
                 href="https://evelynwong.vercel.app"
                 target="_blank"
                 rel="noreferrer"
+                onClick={() => track('Old site click')}
               >
                 <svg className="social-icon" viewBox="0 0 24 24" aria-hidden="true">
                   <circle cx="12" cy="12" r="9" />

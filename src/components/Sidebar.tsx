@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import { track } from '@vercel/analytics'
 import type { CSSProperties } from 'react'
 import { socials } from '../data/socials.ts'
 import { SocialIcon } from './SocialIcon.tsx'
@@ -73,7 +74,13 @@ export function Sidebar({
             {links.map((social) => (
               <li key={social.id}>
                 {social.href ? (
-                  <a href={social.href} target="_blank" rel="noreferrer" aria-label={social.name}>
+                  <a
+                    href={social.href}
+                    target="_blank"
+                    rel="noreferrer"
+                    aria-label={social.name}
+                    onClick={() => track('Social click', { network: social.name, from: 'sidebar' })}
+                  >
                     <SocialIcon id={social.id} />
                   </a>
                 ) : (
