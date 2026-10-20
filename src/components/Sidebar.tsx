@@ -4,11 +4,12 @@ import type { CSSProperties } from 'react'
 import { socials } from '../data/socials.ts'
 import { SocialIcon } from './SocialIcon.tsx'
 
-export type Page = 'characters' | 'blog' | 'contact'
+export type Page = 'characters' | 'blog' | 'arcade' | 'contact'
 
 const NAV: { page: Page; label: string; href: string }[] = [
   { page: 'characters', label: 'Character Select', href: '#/' },
   { page: 'blog', label: 'Blog', href: '#/blog' },
+  { page: 'arcade', label: 'Arcade', href: '#/arcade' },
   { page: 'contact', label: 'Contact', href: '#/contact' },
 ]
 

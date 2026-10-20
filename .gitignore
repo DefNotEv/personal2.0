@@ -25,3 +25,6 @@ dist-ssr
 
 # Original font downloads (licenses inside); only web-licensed files go in public/fonts
 fonts-source/
+
+.vercel
+.env*

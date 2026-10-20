@@ -7,6 +7,7 @@ import { CharacterSelect } from './components/CharacterSelect.tsx'
 import { ContactPage } from './components/ContactPage.tsx'
 import { IntroScreen } from './components/IntroScreen.tsx'
 import { LoadingScreen } from './components/LoadingScreen.tsx'
+import { PitStopPage } from './components/PitStopPage.tsx'
 import { PixelCursor } from './components/PixelCursor.tsx'
 import { Sidebar } from './components/Sidebar.tsx'
 import type { Page } from './components/Sidebar.tsx'
@@ -25,7 +26,7 @@ function prefersReducedMotion(): boolean {
 
 type Route = { page: Page; post?: string }
 
-/** #/ → character select, #/blog, #/blog/<post>, #/contact. */
+/** #/ → character select, #/blog, #/blog/<post>, #/arcade, #/contact. */
 /**
  * Analytics can't see #/ routes, so report each view as a real path, with a
  * route template so Vercel groups e.g. every post under /blog/[slug].
@@ -33,6 +34,7 @@ type Route = { page: Page; post?: string }
 function analyticsPage(route: Route, screen: Screen, characterId: string) {
   if (route.page === 'blog' && route.post) return { route: '/blog/[slug]', path: `/blog/${route.post}` }
   if (route.page === 'blog') return { route: '/blog', path: '/blog' }
+  if (route.page === 'arcade') return { route: '/arcade', path: '/arcade' }
   if (route.page === 'contact') return { route: '/contact', path: '/contact' }
   if (screen === 'profile') return { route: '/character/[id]', path: `/character/${characterId}` }
   return { route: '/', path: '/' }
@@ -41,6 +43,7 @@ function analyticsPage(route: Route, screen: Screen, characterId: string) {
 function routeFromHash(): Route {
   const [section, post] = window.location.hash.replace(/^#\/?/, '').split('/')
   if (section === 'blog') return { page: 'blog', post: post || undefined }
+  if (section === 'arcade') return { page: 'arcade' }
   if (section === 'contact') return { page: 'contact' }
   return { page: 'characters' }
 }
@@ -61,6 +64,8 @@ export default function App() {
     ),
   )
   const character = characters[index] ?? characters[0]
+  // The arcade is always in All-Around pink.
+  const arcadeCharacter = characters.find((entry) => entry.id === 'all-around') ?? character
 
   const showRoster = useCallback(() => setScreen('select'), [])
   const showProfile = useCallback(() => {
@@ -128,6 +133,7 @@ export default function App() {
           <CharacterProfile index={index} onBack={showRoster} />
         ) : null}
         {ready && page === 'blog' ? <BlogPage character={character} post={route.post} /> : null}
+        {ready && page === 'arcade' ? <PitStopPage character={arcadeCharacter} /> : null}
         {ready && page === 'contact' ? <ContactPage character={character} /> : null}
         {intro ? <IntroScreen onReveal={showRoster} onGone={hideIntro} /> : null}
         {loading ? <LoadingScreen onFinish={beginHandoff} /> : null}
