@@ -1,7 +1,7 @@
 ---
 title: How I ruined my life at 16
 date: 2024-09
-version: all-around
+version: sports
 ---
 
 _On a scale of zero to six, how sensitive are you to noise?_

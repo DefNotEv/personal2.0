@@ -20,7 +20,7 @@ My lanyard collection started by accident after attending a summer program at th
 
 ## Polaroids
 
-In junior year, my ex-boyfriend offered me a spare Polaroid camera. Despite the steep cost of film, I instantly fell in love with the art of capturing moments in their rawest, uneditable form. Polaroids are different from digital photos—each one is a one-of-a-kind snapshot that can’t be altered or replicated.
+In junior year, someone offered me a spare Polaroid camera. Despite the steep cost of film, I instantly fell in love with the art of capturing moments in their rawest, uneditable form. Polaroids are different from digital photos—each one is a one-of-a-kind snapshot that can’t be altered or replicated.
 
 ## Digital Photos
 
